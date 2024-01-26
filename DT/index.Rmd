@@ -1,0 +1,51 @@
+--- 
+title: "Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques"
+author: |
+ | Alain Quartier-la-Tente
+ | Insee,  Département des études économiques (DEE), LEMNA
+date: "Janvier 2024"
+site: bookdown::bookdown_site
+documentclass: article
+link-citations: yes
+description: "DT M2024/01"
+themeoptions: "coding=utf8,language=french"
+classoption: 'a4paper,french'
+lang: "fr"
+fontsize: 12pt
+bibliography: [biblio.bib]
+biblio-style: authoryear
+babel-lang: french
+urlcolor: blue
+geometry: hmargin = 25mm, vmargin = 25mm
+always_allow_html: true
+---
+
+```{r, eval = FALSE}
+local({
+    hook_plot <- knitr::knit_hooks$get('plot')
+    knitr::knit_hooks$set(plot = function(x, options) {
+        if(is.null(options$fig.cap) & is.null(options$fig.source))
+            return(hook_plot(x, options))
+        if(is_latex){
+            res <-  knitr:::hook_plot_tex(x, options)
+            # res <- add_footnote_latex(res, options)
+        }else if(is_html){
+            res <- hook_plot(x, options)
+            # res <- add_footnote_html(res, options)
+        }else{
+            res <-  hook_plot(x, options)
+        }
+        res <- add_footnote(res, options)
+        res
+    })
+})
+```
+
+```{r child = 'abstract/abstract.rmd', eval = !is_latex}
+```
+
+```{r,eval=is_latex, include = FALSE, cache = FALSE}
+rmarkdown::render(input = 'abstract/abstract.rmd',
+                  rmarkdown::latex_fragment(citation_package ="biblatex"),
+                  quiet = TRUE)
+```

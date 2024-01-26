@@ -1,0 +1,84 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# DT-est-tr-tc
+
+[![Build](https://github.com/InseeFrLab/DT-est-tr-tc/workflows/Dockerize/badge.svg)](https://hub.docker.com/repository/docker/inseefrlab/dt-est-tr-tc)
+[![Onyxia](https://img.shields.io/badge/Launch-Datalab-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB)
+
+Ce dépôt contient tous les programmes du document de travail :
+
+**Quartier-la-Tente A (2024)**, *Estimation en temps réel de la
+tendance-cycle : apport de l’utilisation des moyennes mobiles
+asymétriques*, Document de travail Insee, M2024/01.
+
+Celui-ci est accessible via le lien
+<https://www.insee.fr/fr/statistiques/7759578>. Une version web est
+également accessible via le lien
+<https://inseefrlab.github.io/DT-est-tr-tc/>.
+
+Pour citer cet article :
+
+    @article{inseeDTM202401,
+      title={Estimation en temps r{\'e}el de la tendance cycle{ :} apport de l’utilisation de moyennes mobiles asym{\'e}triques},
+      author={Quartier{-la-}Tente, Alain},
+      journal={Document de travail méthodologique Insee},
+      number={M2024/01},
+      year={2024},
+      url={https://github.com/InseeFrLab/DT-est-tr-tc}
+    }
+
+## Installation
+
+Tous les programmes sont en R et ils nécessitent d’avoir une version de
+Java SE supérieure ou égale à 17. Pour vérifier la version Java utilisée
+par R, utiliser la commande :
+
+``` r
+library(rJava)
+.jinit()
+.jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
+```
+
+Si vous n’avez pas de version compatible, vous pouvez par exemple
+installer une version portable à partir des liens suivants :
+
+- [Zulu JDK](https://www.azul.com/downloads/#zulu) ;
+
+- [AdoptOpenJDK](https://adoptopenjdk.net/) ;
+
+- [Amazon Corretto](https://aws.amazon.com/corretto/).
+
+Pour installer tous les packages, une fois le projet chargé il suffit de
+lancer le code `renv::restore()`.
+
+Une [image
+docker](https://hub.docker.com/repository/docker/inseefrlab/dt-est-tr-tc)
+a été construite pour assurer la reproductibilité complète de
+l’environnement utilisé pour ce document de travail. Elle peut également
+être directement utilisée avec
+[Onyxia](https://github.com/InseeFrLab/onyxia-web), la plateforme
+*datascience* développée par l’[Insee](https://www.insee.fr/fr/accueil)
+en cliquant sur
+[![Onyxia](https://img.shields.io/badge/Launch-Datalab-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB).
+
+## Description des programmes
+
+Tous les programmes R sont rassemblés dans chaque dossier, chacun
+contenant un fichier `README` explicatif :
+
+- `R_filters` : programmes pour générer les filtres FST et RKHS utilisés
+  ;
+
+- `R_fredm` : programmes sur les données réelles ;
+
+- `R_simul` : programmes sur les données simulées ;
+
+- `R_local_ic` : programmes sur la paramétrisation locale des filtres
+  polynomiaux ;
+
+- `R_henderson_theorem` : programmes sur l’analyse d’équivalence entre
+  les filtres FST et la régression polynomiale.
+
+Le programme utilisé pour l’exemple du document de travail est sous
+`DT/img/Ex_climat_cl4.R`.

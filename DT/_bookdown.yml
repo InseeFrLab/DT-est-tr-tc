@@ -1,0 +1,28 @@
+book_filename: "M2024-01_DT_Estimation-en-temps-reel-de-la-tendance-cycle"
+delete_merged_file: true
+language:
+  label:
+    fig: !expr function(i) paste("Figure", i,":","")
+    tab: !expr function(i) paste("Table", i,":","")
+    eq: 'Équation '
+    thm: 'Théoreme '
+    lem: 'Lemme '
+    cor: 'Corollaire '
+    prp: 'Proposition '
+    cnj: 'Conjecture '
+    def: 'Définition '
+    exm: 'Exemple '
+    exr: 'Exercice '
+    proof: 'Preuve. '
+    remark: 'Remarque. '
+    solution: 'Solution. '
+  ui:
+    edit: Edit
+    chapter_name: 'Chapitre '
+    appendix_name: ''
+before_chapter_script: setup.R
+#rmd_files: ["01-intro.Rmd", "02-sa_to_tce.Rmd", "03-mm_properties.Rmd", "04-fst.Rmd", "05-wildi.Rmd", "06-localpolynomials.Rmd", "07-RKHS.Rmd", "08-comparaison.Rmd", "50-conclusion.Rmd", "60-annexe_diag.Rmd", "61-annexe_plot_coefs.Rmd", "62-annexe_equiv_lp_fst.Rmd", "63-annexe_rkhs_optimization.Rmd", "64-annexe_comparaison_fst.Rmd", "65-annexe_x11.Rmd", "99-references.Rmd", "index.Rmd"]
+#rmd_files: ["index.Rmd",  "64-annexe_comparaison_fst.Rmd", "99-references.Rmd"]
+#rmd_files: ["index.Rmd","01-intro.Rmd","08-comparaison.Rmd", "60-annexe_diag.Rmd"]
+
+

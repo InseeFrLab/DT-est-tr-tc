@@ -1,0 +1,84 @@
+--- 
+always_allow_html: true
+bibliography: "biblio.bib"
+---
+
+
+```{r, include=FALSE}
+is_html <- knitr::is_html_output()
+is_latex <- knitr::is_latex_output()
+
+
+# Fontawesome
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+
+if(is_html){
+    fa_arrow_circle_right <- '<i class="fas fa-arrow-circle-right"></i>'
+    fa_r_project <- '<i class="fab fa-r-project"></i>'
+}else {
+    if(is_latex){
+        fa_arrow_circle_right <- "\\faIcon{arrow-circle-right}"
+        fa_r_project <- "\\faIcon{r-project}"
+    }else {
+        fa_arrow_circle_right <- "->"
+        fa_r_project <- 'R'
+    }
+}
+```
+
+\thispagestyle{fancy}
+
+
+# Résumé {-}
+
+
+`r if (is_html) '
+
+**Remerciements** : L’auteur remercie Olivier Darné, Dominique Ladiray et Jean Palate pour leur aide et conseils tout au long de l’étude, ainsi que Nicolas Carnot, Pauline Givord, Matthieu Lequien, Corinne Prost et Patrick Sillard pour leurs relectures attentives.
+
+Pour citer cet article :
+
+**Quartier-la-Tente A (2024)**, *Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques*, Document de travail Insee, M2024/01.
+
+ou
+'`
+
+```{tikz, eval = FALSE, echo = is_html}
+@article{inseeDTM202401,
+  title={Estimation en temps r{\'e}el de la tendance cycle{ :} apport de l’utilisation de moyennes mobiles asym{\'e}triques},
+  author={Quartier{-la-}Tente, Alain},
+  journal={Document de travail méthodologique Insee},
+  number={M2024/01},
+  year={2024},
+  url={https://github.com/InseeFrLab/DT-est-tr-tc}
+}
+```
+
+
+:::: {.abstract}
+Cette étude s'intéresse à différentes méthodes de construction de moyennes mobiles pour l'estimation en temps réel de la tendance-cycle et la détection rapide des points de retournement.
+Nous proposons une comparaison des principales méthodes, en s'appuyant sur une formulation générique de construction de moyennes mobiles.
+Nous décrivons également deux prolongements possibles aux filtres polynomiaux locaux : l'ajout d'un critère permettant de contrôler le déphasage (délai dans la détection des points de retournement) et une façon de paramétriser localement ces filtres. 
+La comparaison empirique des méthodes montre que : les problèmes d'optimisation de filtres issus des espaces de Hilbert à noyau reproduisant (RKHS) augmentent le déphasage et les révisions des estimations de la tendance-cycle ;
+modéliser des tendances polynomiales trop complexes introduit plus de révisions sans diminuer le déphasage\ ;
+pour les filtres polynomiaux, une paramétrisation locale permet une réduction des révisions et du délai de détection des points de retournement.
+
+Mots clés : séries temporelles, tendance-cycle, désaisonnalisation, points de retournement.
+::::
+
+# Abstract {-}
+
+:::: {.abstract}
+This paper focuses on different approaches to build moving averages for real-time trend-cycle estimation and fast turning point detection.
+We propose a comparison of the main methods, based on a general unifying framework to derive linear filters.
+We also describe two possible extensions to local polynomial filters: the addition of a timeliness criterion to control the phase shift (delay in the detection of turning points) and a way to locally parameterize these filters.
+The empirical comparison of the methods shows that: the optimization problems of the filters from the Reproducing Kernel Hilbert Space (RKHS) theory increase the phase shift and the revisions of the trend-cycle estimates;
+modeling polynomial trends that are too complex introduces more revisions without decreasing the phase shift;
+for polynomial filters, a local parameterization reduces the phase shift and the revisions.
+
+Keywords: time series, trend-cycle, seasonal adjustment, turning points.
+::::
+
+JEL Classification: E32, E37.
+
+\newpage

@@ -1,0 +1,28 @@
+bookdown::gitbook:
+  css: style.css
+  global_numbering: true
+  config:
+    toc:
+      before: |
+        <li><a href="./">DT M2024/01</a></li>
+    download: ["pdf", "tex"]
+  includes:
+    before_body: preamble.html
+    
+bookdown::pdf_document2:
+  toc: true
+  toc_depth: 3
+  number_sections: true
+  fig_width: 7
+  fig_height: 6
+  fig_caption: true
+  highlight: default
+  keep_tex: yes
+  includes:
+    in_header: preamble.tex
+    before_body: "abstract/abstract.tex"
+  citation_package: biblatex
+  toc_bib: true
+# bookdown::word_document2:
+#   toc: true
+  

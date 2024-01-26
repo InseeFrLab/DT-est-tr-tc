@@ -1,0 +1,119 @@
+\usepackage{pdfpages, setspace, mathptmx} %times roman
+\usepackage{textpos}%pour textblock
+\makeatletter
+\def\@maketitle{%
+\thispagestyle{fancy}
+\begin{center}
+%TODO
+\line(1,0){450}
+\vspace{5mm}
+\textbf{{\huge E}\Large stimation en temps réel de la tendance-cycle : apport de l’utilisation des filtres asymétriques dans la détection des points de retournement}
+\end{center}
+
+\begin{center}
+\textit{Alain QUARTIER-LA-TENTE*} \\
+\vspace{2mm}
+\textit{(*) Insee,  Département des études économiques (DEE), LEMNA}\\
+\vspace{2mm}
+\url{alain.quartier-la-tente@insee.fr} 
+\end{center}
+
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+\normalsize
+}
+\usepackage{fancyhdr} 
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{} 
+\fancyhead[L]{}
+\fancyhead[R]{}
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+\fancyfoot[C]{\thepage}
+
+\makeatother% cinsérer page de garde
+
+\usepackage{stmaryrd}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{animate, dsfont, here, xspace}
+%\usepackage{tikz}       
+\usepackage{tikz,pgfplots}
+ \pgfplotsset{compat=1.17}
+%\includepdf[fitpaper=true, pages=-]{img/pdg.pdf}
+
+
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\Determinant}{det}
+\renewcommand{\P}{\mathds{P}} %Apparement \P existe déjà ?
+\newcommand\N{\mathds{N}}
+\newcommand\Norm{\mathcal{N}}
+\newcommand\R{\mathds{R}}
+\newcommand\Z{\mathds{Z}}
+\newcommand{\determinant}[1]{\Determinant\left(#1\right)}
+%\newcommand\C{\mathds{C}}
+%\newcommand\Z{\mathds{Z}}
+
+
+\newcommand\1{\mathds{1}}
+\newcommand{\E}[2][]{{\mathds{E}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand{\V}[2][]{{\mathds{V}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand\ud{\,\mathrm{d}}
+\newcommand{\ps}[2]{\left\langle #1 \,,\, #2 \right\rangle}
+
+% blocks
+\usepackage{environ}
+\usepackage[tikz]{bclogo}
+
+\tikzstyle{titlestyle} =[draw=black!80,fill=black!20, text=black,
+ right=10pt, rounded corners]
+\mdfdefinestyle{symmaryboxstyle}{
+	linecolor=black!80, backgroundcolor = black!5,
+	skipabove=\baselineskip, innertopmargin=\baselineskip,
+	innerbottommargin=\baselineskip,
+	userdefinedwidth=\textwidth,
+	middlelinewidth=1.2pt, roundcorner=5pt,
+	skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+	frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+	innerlinewidth=0pt,
+}
+\newcounter{summarybox}
+\NewEnviron{summary_box}[2][true]{%
+\refstepcounter{summarybox} % on incrémente le compteur
+\begin{mdframed}[style=symmaryboxstyle,
+nobreak=#1,
+frametitle={%
+      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+      \node[titlestyle,anchor=east]
+    {Encadré \thesummarybox{} --- #2};}
+]
+\vspace{-0.5em}
+\BODY
+\end{mdframed}
+}
+
+\usepackage{amsthm}
+%\theoremstyle{remark}
+\newtheorem*{remarque}{Remarque}
+
+\usepackage{mathrsfs}
+\usepackage{fontawesome5}
+
+\usepackage[style=authoryear,uniquename=false, uniquelist=false]{biblatex}
+\DefineBibliographyStrings{french}{andothers={et\addabbrvspace alii}}
+

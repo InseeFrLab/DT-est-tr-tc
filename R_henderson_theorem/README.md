@@ -1,0 +1,3 @@
+Ce dossier contient les programmes pour regarder les filtres FST qui respectent les conditions du théorème d'Henderson : toute moyenne mobile qui préserve les tendances de degré d et dont le diagramme des coefficients change au plus d fois de signes peut être obtenue par une régression polynomiale locale de degré p estimée par moindres carrés pondérés. 
+
+Le fichier `1-creation_data.R` crée les filtres FST avec un quadrillage du plan [0,1]^3^ et regarde si les moyennes mobiles respectent les conditions du théorème d'Henderson et le fichier `2-graphiques.R` trace les graphiques des poids associés aux filtres ne respectant pas ces conditions.
