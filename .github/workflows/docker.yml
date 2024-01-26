@@ -5,6 +5,7 @@ on:
     paths:
       - "renv.lock"
       - "Dockerfile"
+  workflow_dispatch:
 
 jobs:
   docker:
