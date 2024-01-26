@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr" xml:lang="fr">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>C Exemple sous R | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques</title>
+  <meta name="description" content="DT M2024/01" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="C Exemple sous R | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="DT M2024/01" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="C Exemple sous R | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques" />
+  
+  <meta name="twitter:description" content="DT M2024/01" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="an-graphs.html"/>
+<link rel="next" href="an-noyaux.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">DT M2024/01</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Résumé</a></li>
+<li class="chapter" data-level="" data-path="abstract.html"><a href="abstract.html"><i class="fa fa-check"></i>Abstract</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="sec-propMM.html"><a href="sec-propMM.html"><i class="fa fa-check"></i><b>1</b> Quelques propriétés sur les moyennes mobiles</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec:gain-deph"><i class="fa fa-check"></i><b>1.1</b> Fonctions de gain et de déphasage</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-propMM.html"><a href="sec-propMM.html#propriétés-souhaitables-dune-moyenne-mobile"><i class="fa fa-check"></i><b>1.2</b> Propriétés souhaitables d’une moyenne mobile</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="sec-propMM.html"><a href="sec-propMM.html#préservation-de-tendances"><i class="fa fa-check"></i><b>1.2.1</b> Préservation de tendances</a></li>
+<li class="chapter" data-level="1.2.2" data-path="sec-propMM.html"><a href="sec-propMM.html#réduction-du-bruit"><i class="fa fa-check"></i><b>1.2.2</b> Réduction du bruit</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="sec-propMM.html"><a href="sec-propMM.html#sec-mmasym"><i class="fa fa-check"></i><b>1.3</b> Estimation en temps réel et moyennes mobiles asymétriques</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="sec-propMM.html"><a href="sec-propMM.html#subec:mmetprev"><i class="fa fa-check"></i><b>1.3.1</b> Moyennes mobiles asymétriques et prévision</a></li>
+<li class="chapter" data-level="1.3.2" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec:crit-qual"><i class="fa fa-check"></i><b>1.3.2</b> Indicateurs de qualité des moyennes mobiles asymétriques</a></li>
+<li class="chapter" data-level="1.3.3" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec-formulegen"><i class="fa fa-check"></i><b>1.3.3</b> Formule générale de construction des moyennes mobiles</a></li>
+<li class="chapter" data-level="1.3.4" data-path="sec-propMM.html"><a href="sec-propMM.html#illustration"><i class="fa fa-check"></i><b>1.3.4</b> Illustration</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html"><i class="fa fa-check"></i><b>2</b> Régression non paramétrique et régression polynomiale locale</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#sec-proietti"><i class="fa fa-check"></i><b>2.1</b> Régression polynomiale : approche de Proietti et Luati</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-symétriques"><i class="fa fa-check"></i><b>2.1.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="2.1.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-lppasymf"><i class="fa fa-check"></i><b>2.1.2</b> Filtres asymétriques</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-localic"><i class="fa fa-check"></i><b>2.2</b> Paramétrisation locale des filtres asymétriques</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-lptimeliness"><i class="fa fa-check"></i><b>2.3</b> Extension avec le critère de <em>timeliness</em></a></li>
+<li class="chapter" data-level="2.4" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-graythomson"><i class="fa fa-check"></i><b>2.4</b> Régression polynomiale : Gray et Thomson</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-symétriques-1"><i class="fa fa-check"></i><b>2.4.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="2.4.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-asymétriques"><i class="fa fa-check"></i><b>2.4.2</b> Filtres asymétriques</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#sec-rkhs"><i class="fa fa-check"></i><b>2.5</b> Reproducing Kernel Hilbert Space (RKHS) : approche de Dagum et Bianconcini</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="subsec-GuggemosEtAl.html"><a href="subsec-GuggemosEtAl.html"><i class="fa fa-check"></i><b>3</b> Approche <em>Fidelity-Smoothness-Timeliness</em> (FST)</a></li>
+<li class="chapter" data-level="4" data-path="sec-WildiMcLeroy.html"><a href="sec-WildiMcLeroy.html"><i class="fa fa-check"></i><b>4</b> Filtres dépendant des données : trilemme ATS</a></li>
+<li class="chapter" data-level="5" data-path="sec-comparison.html"><a href="sec-comparison.html"><i class="fa fa-check"></i><b>5</b> Comparaison des différentes méthodes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="sec-comparison.html"><a href="sec-comparison.html#séries-simulées"><i class="fa fa-check"></i><b>5.1</b> Séries simulées</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="sec-comparison.html"><a href="sec-comparison.html#méthodologie"><i class="fa fa-check"></i><b>5.1.1</b> Méthodologie</a></li>
+<li class="chapter" data-level="5.1.2" data-path="sec-comparison.html"><a href="sec-comparison.html#comparaison"><i class="fa fa-check"></i><b>5.1.2</b> Comparaison</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="sec-comparison.html"><a href="sec-comparison.html#série-réelle"><i class="fa fa-check"></i><b>5.2</b> Série réelle</a></li>
+<li class="chapter" data-level="5.3" data-path="sec-comparison.html"><a href="sec-comparison.html#discussion"><i class="fa fa-check"></i><b>5.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="appendix"><span><b>Annexe</b></span></li>
+<li class="chapter" data-level="A" data-path="an-diag.html"><a href="an-diag.html"><i class="fa fa-check"></i><b>A</b> Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="an-diag.html"><a href="an-diag.html#formule-générale-de-construction-des-filtres"><i class="fa fa-check"></i><b>A.1</b> Formule générale de construction des filtres</a></li>
+<li class="chapter" data-level="A.2" data-path="an-diag.html"><a href="an-diag.html#liens-entre-les-différentes-méthodes"><i class="fa fa-check"></i><b>A.2</b> Liens entre les différentes méthodes</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="an-diag.html"><a href="an-diag.html#critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>A.2.1</b> Critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
+<li class="chapter" data-level="A.2.2" data-path="an-diag.html"><a href="an-diag.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>A.2.2</b> Équivalence avec les moindres carrés pondérés</a></li>
+<li class="chapter" data-level="A.2.3" data-path="an-diag.html"><a href="an-diag.html#rkhs-et-polynômes-locaux"><i class="fa fa-check"></i><b>A.2.3</b> RKHS et polynômes locaux</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="an-diag.html"><a href="an-diag.html#diagrammes-synthétiques"><i class="fa fa-check"></i><b>A.3</b> Diagrammes synthétiques</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="an-graphs.html"><a href="an-graphs.html"><i class="fa fa-check"></i><b>B</b> Coefficients, fonctions de gain et de déphasage</a></li>
+<li class="chapter" data-level="C" data-path="ann-ex-r.html"><a href="ann-ex-r.html"><i class="fa fa-check"></i><b>C</b> Exemple sous R</a></li>
+<li class="chapter" data-level="D" data-path="an-noyaux.html"><a href="an-noyaux.html"><i class="fa fa-check"></i><b>D</b> Noyaux et régression locale</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="an-noyaux.html"><a href="an-noyaux.html#sec-kernels"><i class="fa fa-check"></i><b>D.1</b> Les différents noyaux</a></li>
+<li class="chapter" data-level="D.2" data-path="an-noyaux.html"><a href="an-noyaux.html#sec-sympolyfilter"><i class="fa fa-check"></i><b>D.2</b> Quelques filtres symétriques particuliers</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!-- <script type="text/x-mathjax-config"> -->
+    <!-- MathJax.Hub.Config({ -->
+            <!--   TeX: { -->
+                    <!--     Macros: { -->
+                            <!--       NN: "{\\mathbb{N}}", -->
+                            <!--       ZZ: "{\\mathbb{Z}}", -->
+                            <!--       QQ: "{\\mathbb{Q}}", -->
+                            <!--       RR: "{\\mathbb{R}}", -->
+                            <!--       shiftset: "{\\mathcal{D}}", -->
+                            <!--       dx: ["{\\mathrm{d}^{#1}\\mspace{-1mu}\\mathord{#2}}", 2, ""], -->
+                            <!--       indic: "{\\unicode{x1D7D9}}", -->
+                            <!--       prob: "\\mathop{\\mathbb{P}}", -->
+                            <!--       esp: "\\mathop{\\mathbb{E}}", -->
+                            <!--       var: "\\mathop{\\mathbb{V}\\text{ar}}", -->
+                            <!--       cov: "\\mathop{\\mathbb{C}\\text{ov}}", -->
+                            <!--       PP: ["{\\prob\\left({#1}\\right)}", 1], -->
+                            <!--       EE: ["{\\esp\\left[{#1}\\right]}", 1], -->
+                            <!--       VV: ["{\\var\\left[{#1}\\right]}", 1], -->
+                            <!--       CC: ["{\\cov\\left[{#1}\\right]}", 1], -->
+                            <!--       normal: ["{\\mathcal{N}\\left({#1},{#2}\\right)}", 2], -->
+                            <!--       ou: ["{#1}_{\\text{ou}}", 1], -->
+                            <!--       oui: ["{#1}_{\\text{ou},#2}", 2], -->
+                            <!--       pv: "{\\mathfrak{p}}", -->
+                            <!--       qv: "{\\mathfrak{q}}", -->
+                            <!--       zs: "{\\mathfrak{z}}", -->
+                            <!--       ts: "{\\mathfrak{t}}", -->
+                            <!--       sign: "{\\mathfrak{s}}", -->
+                            <!--       shifts: "{\\delta}", -->
+                            <!--       optim: "{\\beta}", -->
+                            <!--       param: "{\\theta}", -->
+                            <!--       unif: ["{\\mathcal{U}\\left({#1}\\right)}", 1], -->
+                            <!--       argmin: "\\mathop{\\mathrm{argmin}}", -->
+                            <!--       diag: "\\mathop{\\mathrm{Diag}}", -->
+                            <!--       rang: "\\mathop{\\mathrm{rang}}", -->
+                            <!--       pa: "\\mathop{\\mathrm{pa}}", -->
+                            <!--       mrca: "\\mathop{\\mathrm{mrca}}", -->
+                            <!--       desc: "\\mathop{\\mathrm{desc}}", -->
+                            <!--       warning: ["\\color{red}{{#1}}", 1] -->
+                            <!--     } -->
+                    <!--   } -->
+            <!-- }); -->
+    <!-- </script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    TeX: {Macros: {
+            E: "{\\mathbb{E}}"
+        },
+        Augment: {
+        Definitions: {
+          delimiter: {
+            "\\llbracket": '\u27E6',
+            '\\rrbracket': '\u27E7'
+          }}
+        }}
+    });
+</script>
+    <body>
+    <div style="display:none" aria-hidden="true">
+    \(
+        \newcommand\R{\mathbb{R}}
+        \newcommand\Z{\mathbb{Z}}
+        \newcommand\LL{\mathbb{L}}
+        \newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+        \newcommand{\V}[1]{\mathbb{V}\left[#1\right]}
+        \newcommand{\ps}[2]{\left\langle #1 \,,\, #2 \right\rangle}
+        \newcommand\1{\mathbb{1}}
+        \newcommand\N{\mathbb{N}}
+        \newcommand\Norm{\mathcal{N}}
+        \newcommand{\transp}[1]{{}^t\!#1}
+        \newcommand\ud{\,\mathrm{d}}
+        \DeclareMathOperator*{\argmax}{argmax}
+        \DeclareMathOperator*{\argmin}{argmin}
+        \DeclareMathOperator{\e}{e}
+        \DeclareMathOperator{\Cov}{Cov}
+        \DeclareMathOperator{\Determinant}{det}
+        \newcommand{\determinant}[1]{\Determinant\left(#1\right)}
+    \)
+    </div>
+    </body>
+            
+<div id="ann-ex-r" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">C</span> Exemple sous R<a href="ann-ex-r.html#ann-ex-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Cette annexe présente le code utilisé pour les exemples sur le climat des affaires dans l’industrie automobile.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="ann-ex-r.html#cb2-1" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;rjdemetra/rjd3toolkit&quot;)</span></span>
+<span id="cb2-2"><a href="ann-ex-r.html#cb2-2" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;rjdemetra/rjd3filters&quot;)</span></span>
+<span id="cb2-3"><a href="ann-ex-r.html#cb2-3" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;rjdemetra/rjd3x11plus&quot;)</span></span>
+<span id="cb2-4"><a href="ann-ex-r.html#cb2-4" tabindex="-1"></a><span class="fu">library</span>(rjd3filters)</span>
+<span id="cb2-5"><a href="ann-ex-r.html#cb2-5" tabindex="-1"></a><span class="fu">library</span>(rjd3x11plus)</span>
+<span id="cb2-6"><a href="ann-ex-r.html#cb2-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-7"><a href="ann-ex-r.html#cb2-7" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb2-8"><a href="ann-ex-r.html#cb2-8" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb2-9"><a href="ann-ex-r.html#cb2-9" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb2-10"><a href="ann-ex-r.html#cb2-10" tabindex="-1"></a><span class="fu">library</span>(insee)</span>
+<span id="cb2-11"><a href="ann-ex-r.html#cb2-11" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(insee<span class="sc">::</span><span class="fu">get_insee_idbank</span>(<span class="st">&quot;001786505&quot;</span>))</span>
+<span id="cb2-12"><a href="ann-ex-r.html#cb2-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(y[,<span class="st">&quot;TIME_PERIOD&quot;</span>]), ]</span>
+<span id="cb2-13"><a href="ann-ex-r.html#cb2-13" tabindex="-1"></a>first_date <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">strsplit</span>(y<span class="sc">$</span>TIME_PERIOD[<span class="dv">1</span>], <span class="st">&quot;-&quot;</span>)[[<span class="dv">1</span>]])</span>
+<span id="cb2-14"><a href="ann-ex-r.html#cb2-14" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(y<span class="sc">$</span>OBS_VALUE, <span class="at">start =</span> first_date, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb2-15"><a href="ann-ex-r.html#cb2-15" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">window</span>(y, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2023</span>, <span class="dv">5</span>))</span>
+<span id="cb2-16"><a href="ann-ex-r.html#cb2-16" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">window</span>(y, <span class="at">start =</span> <span class="dv">2010</span>)</span>
+<span id="cb2-17"><a href="ann-ex-r.html#cb2-17" tabindex="-1"></a>last_dates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">tail</span>(<span class="fu">time</span>(y), <span class="dv">7</span>))</span>
+<span id="cb2-18"><a href="ann-ex-r.html#cb2-18" tabindex="-1"></a><span class="fu">names</span>(last_dates) <span class="ot">&lt;-</span> <span class="fu">as.character</span>(zoo<span class="sc">::</span><span class="fu">as.yearmon</span>(last_dates))</span>
+<span id="cb2-19"><a href="ann-ex-r.html#cb2-19" tabindex="-1"></a>der_est <span class="ot">&lt;-</span> <span class="fu">lapply</span>(last_dates, <span class="cf">function</span>(x) <span class="fu">window</span>(y, <span class="at">end =</span> x))</span>
+<span id="cb2-20"><a href="ann-ex-r.html#cb2-20" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="ann-ex-r.html#cb2-21" tabindex="-1"></a><span class="co"># MM de longueur 13 adaptées : </span></span>
+<span id="cb2-22"><a href="ann-ex-r.html#cb2-22" tabindex="-1"></a><span class="fu">select_trend_filter</span>(y)</span>
+<span id="cb2-23"><a href="ann-ex-r.html#cb2-23" tabindex="-1"></a><span class="co"># Estimation finale</span></span>
+<span id="cb2-24"><a href="ann-ex-r.html#cb2-24" tabindex="-1"></a>tc_f <span class="ot">&lt;-</span> <span class="fu">henderson</span>(y, <span class="at">length =</span> <span class="dv">13</span>, <span class="at">musgrave =</span> <span class="cn">FALSE</span>) <span class="co"># Estimation finale</span></span>
+<span id="cb2-25"><a href="ann-ex-r.html#cb2-25" tabindex="-1"></a><span class="fu">plot</span>(y)</span>
+<span id="cb2-26"><a href="ann-ex-r.html#cb2-26" tabindex="-1"></a><span class="fu">lines</span>(tc_f, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb2-27"><a href="ann-ex-r.html#cb2-27" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="ann-ex-r.html#cb2-28" tabindex="-1"></a>forecast<span class="sc">::</span><span class="fu">autoplot</span>(<span class="fu">ts.union</span>(y, tc_f))</span>
+<span id="cb2-29"><a href="ann-ex-r.html#cb2-29" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="ann-ex-r.html#cb2-30" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="ann-ex-r.html#cb2-31" tabindex="-1"></a><span class="do">## Méthode polynomiale</span></span>
+<span id="cb2-32"><a href="ann-ex-r.html#cb2-32" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="ann-ex-r.html#cb2-33" tabindex="-1"></a><span class="co"># Calcul des IC-ratios : </span></span>
+<span id="cb2-34"><a href="ann-ex-r.html#cb2-34" tabindex="-1"></a>icr <span class="ot">&lt;-</span> <span class="fu">sapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-35"><a href="ann-ex-r.html#cb2-35" tabindex="-1"></a>  <span class="fu">ic_ratio</span>(x, <span class="fu">henderson</span>(x, <span class="at">length =</span> <span class="dv">13</span>, <span class="at">musgrave =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb2-36"><a href="ann-ex-r.html#cb2-36" tabindex="-1"></a>})</span>
+<span id="cb2-37"><a href="ann-ex-r.html#cb2-37" tabindex="-1"></a>lp_est <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;LC&quot;</span>, <span class="st">&quot;QL&quot;</span>, <span class="st">&quot;CQ&quot;</span>, <span class="st">&quot;DAF&quot;</span>), <span class="cf">function</span>(method) {</span>
+<span id="cb2-38"><a href="ann-ex-r.html#cb2-38" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(icr), <span class="cf">function</span>(i) {</span>
+<span id="cb2-39"><a href="ann-ex-r.html#cb2-39" tabindex="-1"></a>    lp_coef <span class="ot">&lt;-</span> <span class="fu">lp_filter</span>(<span class="at">horizon =</span> <span class="dv">6</span>,</span>
+<span id="cb2-40"><a href="ann-ex-r.html#cb2-40" tabindex="-1"></a>                         <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>,</span>
+<span id="cb2-41"><a href="ann-ex-r.html#cb2-41" tabindex="-1"></a>                         <span class="at">endpoints =</span> method,</span>
+<span id="cb2-42"><a href="ann-ex-r.html#cb2-42" tabindex="-1"></a>                         <span class="at">ic =</span> icr[i])</span>
+<span id="cb2-43"><a href="ann-ex-r.html#cb2-43" tabindex="-1"></a>    rjd3filters<span class="sc">::</span><span class="fu">filter</span>(der_est[[i]], lp_coef)</span>
+<span id="cb2-44"><a href="ann-ex-r.html#cb2-44" tabindex="-1"></a>  })</span>
+<span id="cb2-45"><a href="ann-ex-r.html#cb2-45" tabindex="-1"></a>  <span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="fu">names</span>(der_est)</span>
+<span id="cb2-46"><a href="ann-ex-r.html#cb2-46" tabindex="-1"></a>  res</span>
+<span id="cb2-47"><a href="ann-ex-r.html#cb2-47" tabindex="-1"></a>})</span>
+<span id="cb2-48"><a href="ann-ex-r.html#cb2-48" tabindex="-1"></a>lp_if <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;LC&quot;</span>, <span class="st">&quot;QL&quot;</span>, <span class="st">&quot;CQ&quot;</span>, <span class="st">&quot;DAF&quot;</span>), <span class="cf">function</span>(method) {</span>
+<span id="cb2-49"><a href="ann-ex-r.html#cb2-49" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(icr), <span class="cf">function</span>(i) {</span>
+<span id="cb2-50"><a href="ann-ex-r.html#cb2-50" tabindex="-1"></a>    lp_coef <span class="ot">&lt;-</span> <span class="fu">lp_filter</span>(<span class="at">horizon =</span> <span class="dv">6</span>,</span>
+<span id="cb2-51"><a href="ann-ex-r.html#cb2-51" tabindex="-1"></a>                         <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>,</span>
+<span id="cb2-52"><a href="ann-ex-r.html#cb2-52" tabindex="-1"></a>                         <span class="at">endpoints =</span> method,</span>
+<span id="cb2-53"><a href="ann-ex-r.html#cb2-53" tabindex="-1"></a>                         <span class="at">ic =</span> icr[i])</span>
+<span id="cb2-54"><a href="ann-ex-r.html#cb2-54" tabindex="-1"></a>    <span class="fu">implicit_forecast</span>(der_est[[i]], lp_coef)</span>
+<span id="cb2-55"><a href="ann-ex-r.html#cb2-55" tabindex="-1"></a>  })</span>
+<span id="cb2-56"><a href="ann-ex-r.html#cb2-56" tabindex="-1"></a>  <span class="fu">names</span>(res) <span class="ot">&lt;-</span> <span class="fu">names</span>(der_est)</span>
+<span id="cb2-57"><a href="ann-ex-r.html#cb2-57" tabindex="-1"></a>  res</span>
+<span id="cb2-58"><a href="ann-ex-r.html#cb2-58" tabindex="-1"></a>})</span>
+<span id="cb2-59"><a href="ann-ex-r.html#cb2-59" tabindex="-1"></a><span class="fu">names</span>(lp_est) <span class="ot">&lt;-</span> <span class="fu">names</span>(lp_if) <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">&quot;LC&quot;</span>, <span class="st">&quot;QL&quot;</span>, <span class="st">&quot;CQ&quot;</span>, <span class="st">&quot;DAF&quot;</span>)</span>
+<span id="cb2-60"><a href="ann-ex-r.html#cb2-60" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="ann-ex-r.html#cb2-61" tabindex="-1"></a><span class="co"># Estimation locale des IC-ratios </span></span>
+<span id="cb2-62"><a href="ann-ex-r.html#cb2-62" tabindex="-1"></a><span class="co"># On réplique l&#39;estimation directe pour avoir </span></span>
+<span id="cb2-63"><a href="ann-ex-r.html#cb2-63" tabindex="-1"></a><span class="co"># des estimateurs de la pente et de la concavité </span></span>
+<span id="cb2-64"><a href="ann-ex-r.html#cb2-64" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="ann-ex-r.html#cb2-65" tabindex="-1"></a>gen_MM <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">p=</span><span class="dv">6</span>, <span class="at">q=</span>p, <span class="at">d=</span><span class="dv">2</span>){</span>
+<span id="cb2-66"><a href="ann-ex-r.html#cb2-66" tabindex="-1"></a>  X_gen <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">d =</span> <span class="dv">1</span>, <span class="at">p =</span> <span class="dv">6</span>, <span class="at">q =</span> p){</span>
+<span id="cb2-67"><a href="ann-ex-r.html#cb2-67" tabindex="-1"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span>d, <span class="cf">function</span>(exp) <span class="fu">seq</span>(<span class="sc">-</span>p, q)<span class="sc">^</span>exp)</span>
+<span id="cb2-68"><a href="ann-ex-r.html#cb2-68" tabindex="-1"></a>  }</span>
+<span id="cb2-69"><a href="ann-ex-r.html#cb2-69" tabindex="-1"></a>  k <span class="ot">=</span> rjd3filters<span class="sc">::</span><span class="fu">get_kernel</span>(<span class="st">&quot;Henderson&quot;</span>, <span class="at">h =</span> p)</span>
+<span id="cb2-70"><a href="ann-ex-r.html#cb2-70" tabindex="-1"></a>  k <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rev</span>(k<span class="sc">$</span>coef[<span class="sc">-</span><span class="dv">1</span>]), k<span class="sc">$</span>coef[<span class="fu">seq</span>(<span class="dv">0</span>,q)<span class="sc">+</span><span class="dv">1</span>])</span>
+<span id="cb2-71"><a href="ann-ex-r.html#cb2-71" tabindex="-1"></a>  K <span class="ot">=</span> <span class="fu">diag</span>(k)</span>
+<span id="cb2-72"><a href="ann-ex-r.html#cb2-72" tabindex="-1"></a>  X <span class="ot">=</span> <span class="fu">X_gen</span>(<span class="at">d=</span>d, <span class="at">p =</span> p, <span class="at">q =</span> q)</span>
+<span id="cb2-73"><a href="ann-ex-r.html#cb2-73" tabindex="-1"></a>  e1 <span class="ot">=</span> e2 <span class="ot">=</span> e3 <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">nrow =</span> d<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb2-74"><a href="ann-ex-r.html#cb2-74" tabindex="-1"></a>  e1[<span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-75"><a href="ann-ex-r.html#cb2-75" tabindex="-1"></a>  e2[<span class="dv">2</span>] <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-76"><a href="ann-ex-r.html#cb2-76" tabindex="-1"></a>  e3[<span class="dv">3</span>] <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-77"><a href="ann-ex-r.html#cb2-77" tabindex="-1"></a>  <span class="co"># Estimateur de la constante</span></span>
+<span id="cb2-78"><a href="ann-ex-r.html#cb2-78" tabindex="-1"></a>  M1 <span class="ot">=</span> K <span class="sc">%*%</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> K <span class="sc">%*%</span> X, e1)</span>
+<span id="cb2-79"><a href="ann-ex-r.html#cb2-79" tabindex="-1"></a>  <span class="co"># estimateur de la pente</span></span>
+<span id="cb2-80"><a href="ann-ex-r.html#cb2-80" tabindex="-1"></a>  M2 <span class="ot">=</span> K <span class="sc">%*%</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> K <span class="sc">%*%</span> X, e2)</span>
+<span id="cb2-81"><a href="ann-ex-r.html#cb2-81" tabindex="-1"></a>  <span class="co"># estimateur de la concavité</span></span>
+<span id="cb2-82"><a href="ann-ex-r.html#cb2-82" tabindex="-1"></a>  M3 <span class="ot">=</span> K <span class="sc">%*%</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> K <span class="sc">%*%</span> X, e3)</span>
+<span id="cb2-83"><a href="ann-ex-r.html#cb2-83" tabindex="-1"></a>  mm <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">const =</span> M1, <span class="at">pente =</span> M2, <span class="at">concav =</span> M3)</span>
+<span id="cb2-84"><a href="ann-ex-r.html#cb2-84" tabindex="-1"></a>  <span class="fu">lapply</span>(mm, moving_average, <span class="at">lags =</span> <span class="sc">-</span>p)</span>
+<span id="cb2-85"><a href="ann-ex-r.html#cb2-85" tabindex="-1"></a>}</span>
+<span id="cb2-86"><a href="ann-ex-r.html#cb2-86" tabindex="-1"></a>all_mm <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">0</span>, gen_MM, <span class="at">p =</span> <span class="dv">6</span>, <span class="at">d =</span> <span class="dv">2</span>)</span>
+<span id="cb2-87"><a href="ann-ex-r.html#cb2-87" tabindex="-1"></a>est_pente <span class="ot">&lt;-</span> <span class="fu">finite_filters</span>(all_mm[[<span class="dv">1</span>]]<span class="sc">$</span>pente,</span>
+<span id="cb2-88"><a href="ann-ex-r.html#cb2-88" tabindex="-1"></a>                            <span class="fu">lapply</span>(all_mm[<span class="sc">-</span><span class="dv">1</span>], <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="st">&quot;pente&quot;</span>))</span>
+<span id="cb2-89"><a href="ann-ex-r.html#cb2-89" tabindex="-1"></a>est_concav <span class="ot">&lt;-</span> <span class="fu">finite_filters</span>(all_mm[[<span class="dv">1</span>]]<span class="sc">$</span>concav,</span>
+<span id="cb2-90"><a href="ann-ex-r.html#cb2-90" tabindex="-1"></a>                             <span class="fu">lapply</span>(all_mm[<span class="sc">-</span><span class="dv">1</span>], <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="st">&quot;concav&quot;</span>))</span>
+<span id="cb2-91"><a href="ann-ex-r.html#cb2-91" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="ann-ex-r.html#cb2-92" tabindex="-1"></a>henderson_f <span class="ot">&lt;-</span> <span class="fu">lp_filter</span>(<span class="at">h=</span><span class="dv">6</span>)<span class="sc">@</span>sfilter</span>
+<span id="cb2-93"><a href="ann-ex-r.html#cb2-93" tabindex="-1"></a>lp_filter2 <span class="ot">&lt;-</span> <span class="cf">function</span>(icr, <span class="at">method =</span> <span class="st">&quot;LC&quot;</span>, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>){</span>
+<span id="cb2-94"><a href="ann-ex-r.html#cb2-94" tabindex="-1"></a>  all_coef <span class="ot">=</span> <span class="fu">lapply</span>(icr, <span class="cf">function</span>(ic){</span>
+<span id="cb2-95"><a href="ann-ex-r.html#cb2-95" tabindex="-1"></a>    <span class="fu">lp_filter</span>(<span class="at">horizon =</span> h,</span>
+<span id="cb2-96"><a href="ann-ex-r.html#cb2-96" tabindex="-1"></a>              <span class="at">kernel =</span> kernel,</span>
+<span id="cb2-97"><a href="ann-ex-r.html#cb2-97" tabindex="-1"></a>              <span class="at">endpoints =</span> method,</span>
+<span id="cb2-98"><a href="ann-ex-r.html#cb2-98" tabindex="-1"></a>              <span class="at">ic =</span> ic)</span>
+<span id="cb2-99"><a href="ann-ex-r.html#cb2-99" tabindex="-1"></a>  })</span>
+<span id="cb2-100"><a href="ann-ex-r.html#cb2-100" tabindex="-1"></a>  rfilters <span class="ot">=</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span>h, <span class="cf">function</span>(i){</span>
+<span id="cb2-101"><a href="ann-ex-r.html#cb2-101" tabindex="-1"></a>    q <span class="ot">&lt;-</span> h <span class="sc">-</span> i</span>
+<span id="cb2-102"><a href="ann-ex-r.html#cb2-102" tabindex="-1"></a>    all_coef[[i]][,<span class="fu">sprintf</span>(<span class="st">&quot;q=%i&quot;</span>, q)]</span>
+<span id="cb2-103"><a href="ann-ex-r.html#cb2-103" tabindex="-1"></a>  })</span>
+<span id="cb2-104"><a href="ann-ex-r.html#cb2-104" tabindex="-1"></a>  <span class="fu">finite_filters</span>(henderson_f, <span class="at">rfilters =</span> rfilters)</span>
+<span id="cb2-105"><a href="ann-ex-r.html#cb2-105" tabindex="-1"></a>}</span>
+<span id="cb2-106"><a href="ann-ex-r.html#cb2-106" tabindex="-1"></a>loc_lc_est <span class="ot">&lt;-</span> </span>
+<span id="cb2-107"><a href="ann-ex-r.html#cb2-107" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-108"><a href="ann-ex-r.html#cb2-108" tabindex="-1"></a>    est_loc_pente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">tail</span>(est_pente <span class="sc">*</span> x, <span class="dv">6</span>))</span>
+<span id="cb2-109"><a href="ann-ex-r.html#cb2-109" tabindex="-1"></a>    sigma2 <span class="ot">&lt;-</span> <span class="fu">var_estimator</span>(x, henderson_f)</span>
+<span id="cb2-110"><a href="ann-ex-r.html#cb2-110" tabindex="-1"></a>    icr <span class="ot">=</span> <span class="dv">2</span><span class="sc">/</span>(<span class="fu">sqrt</span>(pi) <span class="sc">*</span> (est_loc_pente <span class="sc">/</span> <span class="fu">sqrt</span>(sigma2)))</span>
+<span id="cb2-111"><a href="ann-ex-r.html#cb2-111" tabindex="-1"></a>    lp_coef <span class="ot">=</span> <span class="fu">lp_filter2</span>(<span class="at">ic =</span> icr, </span>
+<span id="cb2-112"><a href="ann-ex-r.html#cb2-112" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;LC&quot;</span>, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>)</span>
+<span id="cb2-113"><a href="ann-ex-r.html#cb2-113" tabindex="-1"></a>    rjd3filters<span class="sc">::</span><span class="fu">filter</span>(x, lp_coef)</span>
+<span id="cb2-114"><a href="ann-ex-r.html#cb2-114" tabindex="-1"></a>  })</span>
+<span id="cb2-115"><a href="ann-ex-r.html#cb2-115" tabindex="-1"></a>loc_lc_if <span class="ot">&lt;-</span> </span>
+<span id="cb2-116"><a href="ann-ex-r.html#cb2-116" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-117"><a href="ann-ex-r.html#cb2-117" tabindex="-1"></a>    est_loc_pente <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">tail</span>(est_pente <span class="sc">*</span> x, <span class="dv">6</span>))</span>
+<span id="cb2-118"><a href="ann-ex-r.html#cb2-118" tabindex="-1"></a>    sigma2 <span class="ot">&lt;-</span> <span class="fu">var_estimator</span>(x, henderson_f)</span>
+<span id="cb2-119"><a href="ann-ex-r.html#cb2-119" tabindex="-1"></a>    icr <span class="ot">=</span> <span class="dv">2</span><span class="sc">/</span>(<span class="fu">sqrt</span>(pi) <span class="sc">*</span> (est_loc_pente <span class="sc">/</span> <span class="fu">sqrt</span>(sigma2)))</span>
+<span id="cb2-120"><a href="ann-ex-r.html#cb2-120" tabindex="-1"></a>    lp_coef <span class="ot">=</span> <span class="fu">lp_filter2</span>(<span class="at">ic =</span> icr, </span>
+<span id="cb2-121"><a href="ann-ex-r.html#cb2-121" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;LC&quot;</span>, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>)</span>
+<span id="cb2-122"><a href="ann-ex-r.html#cb2-122" tabindex="-1"></a>    <span class="fu">implicit_forecast</span>(x, lp_coef)</span>
+<span id="cb2-123"><a href="ann-ex-r.html#cb2-123" tabindex="-1"></a>  })</span>
+<span id="cb2-124"><a href="ann-ex-r.html#cb2-124" tabindex="-1"></a>loc_ql_est <span class="ot">&lt;-</span> </span>
+<span id="cb2-125"><a href="ann-ex-r.html#cb2-125" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-126"><a href="ann-ex-r.html#cb2-126" tabindex="-1"></a>    est_loc_concav <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">tail</span>(est_concav <span class="sc">*</span> x, <span class="dv">6</span>))</span>
+<span id="cb2-127"><a href="ann-ex-r.html#cb2-127" tabindex="-1"></a>    sigma2 <span class="ot">&lt;-</span> <span class="fu">var_estimator</span>(x, henderson_f)</span>
+<span id="cb2-128"><a href="ann-ex-r.html#cb2-128" tabindex="-1"></a>    icr <span class="ot">=</span> <span class="dv">2</span><span class="sc">/</span>(<span class="fu">sqrt</span>(pi) <span class="sc">*</span> (est_loc_concav <span class="sc">/</span> <span class="fu">sqrt</span>(sigma2)))</span>
+<span id="cb2-129"><a href="ann-ex-r.html#cb2-129" tabindex="-1"></a>    lp_coef <span class="ot">=</span> <span class="fu">lp_filter2</span>(<span class="at">ic =</span> icr, </span>
+<span id="cb2-130"><a href="ann-ex-r.html#cb2-130" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;QL&quot;</span>, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>)</span>
+<span id="cb2-131"><a href="ann-ex-r.html#cb2-131" tabindex="-1"></a>    rjd3filters<span class="sc">::</span><span class="fu">filter</span>(x, lp_coef)</span>
+<span id="cb2-132"><a href="ann-ex-r.html#cb2-132" tabindex="-1"></a>  })</span>
+<span id="cb2-133"><a href="ann-ex-r.html#cb2-133" tabindex="-1"></a>loc_ql_if <span class="ot">&lt;-</span> </span>
+<span id="cb2-134"><a href="ann-ex-r.html#cb2-134" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-135"><a href="ann-ex-r.html#cb2-135" tabindex="-1"></a>    est_loc_concav <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">tail</span>(est_concav <span class="sc">*</span> x, <span class="dv">6</span>))</span>
+<span id="cb2-136"><a href="ann-ex-r.html#cb2-136" tabindex="-1"></a>    sigma2 <span class="ot">&lt;-</span> <span class="fu">var_estimator</span>(x, henderson_f)</span>
+<span id="cb2-137"><a href="ann-ex-r.html#cb2-137" tabindex="-1"></a>    icr <span class="ot">=</span> <span class="dv">2</span><span class="sc">/</span>(<span class="fu">sqrt</span>(pi) <span class="sc">*</span> (est_loc_concav <span class="sc">/</span> <span class="fu">sqrt</span>(sigma2)))</span>
+<span id="cb2-138"><a href="ann-ex-r.html#cb2-138" tabindex="-1"></a>    lp_coef <span class="ot">=</span> <span class="fu">lp_filter2</span>(<span class="at">ic =</span> icr, </span>
+<span id="cb2-139"><a href="ann-ex-r.html#cb2-139" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">&quot;QL&quot;</span>, <span class="at">h =</span> <span class="dv">6</span>, <span class="at">kernel =</span> <span class="st">&quot;Henderson&quot;</span>)</span>
+<span id="cb2-140"><a href="ann-ex-r.html#cb2-140" tabindex="-1"></a>    <span class="fu">implicit_forecast</span>(x, lp_coef)</span>
+<span id="cb2-141"><a href="ann-ex-r.html#cb2-141" tabindex="-1"></a>  })</span>
+<span id="cb2-142"><a href="ann-ex-r.html#cb2-142" tabindex="-1"></a><span class="co"># Pour la méthode RKHS, pour le filtre b_q,phi on utilise </span></span>
+<span id="cb2-143"><a href="ann-ex-r.html#cb2-143" tabindex="-1"></a><span class="co"># le paramètre bw de l&#39;article Dagum et Bianconcini (2015) </span></span>
+<span id="cb2-144"><a href="ann-ex-r.html#cb2-144" tabindex="-1"></a>bw_phase <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">`</span><span class="at">q=6</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">7</span>, <span class="st">`</span><span class="at">q=5</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">6.95</span>, <span class="st">`</span><span class="at">q=4</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">6.84</span>,</span>
+<span id="cb2-145"><a href="ann-ex-r.html#cb2-145" tabindex="-1"></a>             <span class="st">`</span><span class="at">q=3</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">6.85</span>, <span class="st">`</span><span class="at">q=2</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">7.34</span>, </span>
+<span id="cb2-146"><a href="ann-ex-r.html#cb2-146" tabindex="-1"></a>             <span class="st">`</span><span class="at">q=1</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">9.24</span>, <span class="st">`</span><span class="at">q=0</span><span class="st">`</span> <span class="ot">=</span> <span class="fl">11.78</span>)</span>
+<span id="cb2-147"><a href="ann-ex-r.html#cb2-147" tabindex="-1"></a>rkhs_filter <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-148"><a href="ann-ex-r.html#cb2-148" tabindex="-1"></a>  <span class="st">&quot;$b_{q,</span><span class="sc">\\</span><span class="st">Gamma}$&quot;</span> <span class="ot">=</span> <span class="fu">rkhs_filter</span>(</span>
+<span id="cb2-149"><a href="ann-ex-r.html#cb2-149" tabindex="-1"></a>    <span class="at">horizon =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb2-150"><a href="ann-ex-r.html#cb2-150" tabindex="-1"></a>    <span class="at">asymmetricCriterion =</span> <span class="st">&quot;FrequencyResponse&quot;</span>,</span>
+<span id="cb2-151"><a href="ann-ex-r.html#cb2-151" tabindex="-1"></a>    <span class="at">kernel =</span> <span class="st">&quot;Biweight&quot;</span>, <span class="at">passband =</span> pi</span>
+<span id="cb2-152"><a href="ann-ex-r.html#cb2-152" tabindex="-1"></a>  ),</span>
+<span id="cb2-153"><a href="ann-ex-r.html#cb2-153" tabindex="-1"></a>  <span class="st">&quot;$b_{q,G}$&quot;</span> <span class="ot">=</span> <span class="fu">rkhs_filter</span>(</span>
+<span id="cb2-154"><a href="ann-ex-r.html#cb2-154" tabindex="-1"></a>    <span class="at">horizon =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb2-155"><a href="ann-ex-r.html#cb2-155" tabindex="-1"></a>    <span class="at">asymmetricCriterion =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
+<span id="cb2-156"><a href="ann-ex-r.html#cb2-156" tabindex="-1"></a>    <span class="at">kernel =</span> <span class="st">&quot;Biweight&quot;</span>, <span class="at">passband =</span> pi</span>
+<span id="cb2-157"><a href="ann-ex-r.html#cb2-157" tabindex="-1"></a>  ),</span>
+<span id="cb2-158"><a href="ann-ex-r.html#cb2-158" tabindex="-1"></a>  <span class="st">&quot;$b_{q,</span><span class="sc">\\</span><span class="st">phi}$&quot;</span> <span class="ot">=</span> <span class="fu">finite_filters</span>(</span>
+<span id="cb2-159"><a href="ann-ex-r.html#cb2-159" tabindex="-1"></a>    <span class="fu">do.call</span>(cbind, <span class="fu">lapply</span>(<span class="fu">seq_along</span>(bw_phase), <span class="cf">function</span>(i){</span>
+<span id="cb2-160"><a href="ann-ex-r.html#cb2-160" tabindex="-1"></a>      <span class="fu">rkhs_filter</span>(<span class="at">horizon =</span> <span class="dv">6</span>, <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb2-161"><a href="ann-ex-r.html#cb2-161" tabindex="-1"></a>                  <span class="at">kernel =</span> <span class="st">&quot;Biweight&quot;</span>,</span>
+<span id="cb2-162"><a href="ann-ex-r.html#cb2-162" tabindex="-1"></a>                  <span class="at">optimalbw =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-163"><a href="ann-ex-r.html#cb2-163" tabindex="-1"></a>                  <span class="at">bandwidth =</span> bw_phase[i])[,<span class="fu">names</span>(bw_phase)[i]]</span>
+<span id="cb2-164"><a href="ann-ex-r.html#cb2-164" tabindex="-1"></a>    }))</span>
+<span id="cb2-165"><a href="ann-ex-r.html#cb2-165" tabindex="-1"></a>  )</span>
+<span id="cb2-166"><a href="ann-ex-r.html#cb2-166" tabindex="-1"></a>)</span>
+<span id="cb2-167"><a href="ann-ex-r.html#cb2-167" tabindex="-1"></a>rkhs_est  <span class="ot">&lt;-</span> <span class="fu">lapply</span>(rkhs_filter, <span class="cf">function</span>(method) {</span>
+<span id="cb2-168"><a href="ann-ex-r.html#cb2-168" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-169"><a href="ann-ex-r.html#cb2-169" tabindex="-1"></a>    x <span class="sc">*</span> method</span>
+<span id="cb2-170"><a href="ann-ex-r.html#cb2-170" tabindex="-1"></a>  })</span>
+<span id="cb2-171"><a href="ann-ex-r.html#cb2-171" tabindex="-1"></a>})</span>
+<span id="cb2-172"><a href="ann-ex-r.html#cb2-172" tabindex="-1"></a></span>
+<span id="cb2-173"><a href="ann-ex-r.html#cb2-173" tabindex="-1"></a>rkhs_if <span class="ot">&lt;-</span> <span class="fu">lapply</span>(rkhs_filter, <span class="cf">function</span>(method) {</span>
+<span id="cb2-174"><a href="ann-ex-r.html#cb2-174" tabindex="-1"></a>  <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-175"><a href="ann-ex-r.html#cb2-175" tabindex="-1"></a>    <span class="fu">implicit_forecast</span>(x, method)</span>
+<span id="cb2-176"><a href="ann-ex-r.html#cb2-176" tabindex="-1"></a>  })</span>
+<span id="cb2-177"><a href="ann-ex-r.html#cb2-177" tabindex="-1"></a>})</span>
+<span id="cb2-178"><a href="ann-ex-r.html#cb2-178" tabindex="-1"></a></span>
+<span id="cb2-179"><a href="ann-ex-r.html#cb2-179" tabindex="-1"></a>fst_f <span class="ot">&lt;-</span> <span class="fu">finite_filters</span>(</span>
+<span id="cb2-180"><a href="ann-ex-r.html#cb2-180" tabindex="-1"></a>  <span class="at">sfilter =</span> <span class="fu">fst_filter</span>(<span class="at">lags =</span> <span class="dv">6</span>, <span class="at">leads =</span> <span class="dv">6</span>, <span class="at">pdegree=</span><span class="dv">2</span>, </span>
+<span id="cb2-181"><a href="ann-ex-r.html#cb2-181" tabindex="-1"></a>                       <span class="at">smoothness.weight=</span><span class="fl">0.05</span>, <span class="at">smoothness.degree=</span><span class="dv">3</span>,</span>
+<span id="cb2-182"><a href="ann-ex-r.html#cb2-182" tabindex="-1"></a>                       <span class="at">timeliness.weight=</span><span class="fl">0.95</span>,</span>
+<span id="cb2-183"><a href="ann-ex-r.html#cb2-183" tabindex="-1"></a>                       <span class="at">timeliness.passband=</span><span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb2-184"><a href="ann-ex-r.html#cb2-184" tabindex="-1"></a>                       <span class="at">timeliness.antiphase=</span><span class="cn">TRUE</span>),</span>
+<span id="cb2-185"><a href="ann-ex-r.html#cb2-185" tabindex="-1"></a>  <span class="at">rfilters =</span> <span class="fu">lapply</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">0</span>, fst_filter, <span class="at">lags =</span> <span class="dv">6</span>, <span class="at">pdegree=</span><span class="dv">2</span>, </span>
+<span id="cb2-186"><a href="ann-ex-r.html#cb2-186" tabindex="-1"></a>                    <span class="at">smoothness.weight=</span><span class="fl">0.05</span>, <span class="at">smoothness.degree=</span><span class="dv">3</span>,</span>
+<span id="cb2-187"><a href="ann-ex-r.html#cb2-187" tabindex="-1"></a>                    <span class="at">timeliness.weight=</span><span class="fl">0.95</span>,</span>
+<span id="cb2-188"><a href="ann-ex-r.html#cb2-188" tabindex="-1"></a>                    <span class="at">timeliness.passband=</span><span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span><span class="dv">12</span>,</span>
+<span id="cb2-189"><a href="ann-ex-r.html#cb2-189" tabindex="-1"></a>                    <span class="at">timeliness.antiphase=</span><span class="cn">TRUE</span>))</span>
+<span id="cb2-190"><a href="ann-ex-r.html#cb2-190" tabindex="-1"></a>fst_est <span class="ot">&lt;-</span> <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-191"><a href="ann-ex-r.html#cb2-191" tabindex="-1"></a>  x <span class="sc">*</span> fst_f</span>
+<span id="cb2-192"><a href="ann-ex-r.html#cb2-192" tabindex="-1"></a>})</span>
+<span id="cb2-193"><a href="ann-ex-r.html#cb2-193" tabindex="-1"></a>fst_if <span class="ot">&lt;-</span> <span class="fu">lapply</span>(der_est, <span class="cf">function</span>(x) {</span>
+<span id="cb2-194"><a href="ann-ex-r.html#cb2-194" tabindex="-1"></a>  <span class="fu">implicit_forecast</span>(x, fst_f)</span>
+<span id="cb2-195"><a href="ann-ex-r.html#cb2-195" tabindex="-1"></a>})</span>
+<span id="cb2-196"><a href="ann-ex-r.html#cb2-196" tabindex="-1"></a></span>
+<span id="cb2-197"><a href="ann-ex-r.html#cb2-197" tabindex="-1"></a><span class="do">## Graphiques</span></span>
+<span id="cb2-198"><a href="ann-ex-r.html#cb2-198" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="ann-ex-r.html#cb2-199" tabindex="-1"></a><span class="co"># Pour tracer toutes les estimations</span></span>
+<span id="cb2-200"><a href="ann-ex-r.html#cb2-200" tabindex="-1"></a>plot_est <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">nperiod =</span> <span class="dv">6</span>) {</span>
+<span id="cb2-201"><a href="ann-ex-r.html#cb2-201" tabindex="-1"></a>  joint_data <span class="ot">&lt;-</span> <span class="fu">do.call</span>(ts.union, data)</span>
+<span id="cb2-202"><a href="ann-ex-r.html#cb2-202" tabindex="-1"></a>  joint_data <span class="ot">&lt;-</span> </span>
+<span id="cb2-203"><a href="ann-ex-r.html#cb2-203" tabindex="-1"></a>    <span class="fu">window</span>(joint_data,</span>
+<span id="cb2-204"><a href="ann-ex-r.html#cb2-204" tabindex="-1"></a>           <span class="at">start =</span> last_dates[<span class="dv">1</span>] <span class="sc">-</span> nperiod <span class="sc">*</span> <span class="fu">deltat</span>(joint_data))</span>
+<span id="cb2-205"><a href="ann-ex-r.html#cb2-205" tabindex="-1"></a>  </span>
+<span id="cb2-206"><a href="ann-ex-r.html#cb2-206" tabindex="-1"></a>  data_legend <span class="ot">&lt;-</span> </span>
+<span id="cb2-207"><a href="ann-ex-r.html#cb2-207" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">x =</span> last_dates,</span>
+<span id="cb2-208"><a href="ann-ex-r.html#cb2-208" tabindex="-1"></a>               <span class="at">y =</span> <span class="fu">sapply</span>(data, tail, <span class="dv">1</span>),</span>
+<span id="cb2-209"><a href="ann-ex-r.html#cb2-209" tabindex="-1"></a>               <span class="at">label =</span> <span class="fu">colnames</span>(joint_data))</span>
+<span id="cb2-210"><a href="ann-ex-r.html#cb2-210" tabindex="-1"></a>  </span>
+<span id="cb2-211"><a href="ann-ex-r.html#cb2-211" tabindex="-1"></a>  forecast<span class="sc">::</span><span class="fu">autoplot</span>(joint_data) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb2-212"><a href="ann-ex-r.html#cb2-212" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> zoo<span class="sc">::</span>as.yearmon) <span class="sc">+</span></span>
+<span id="cb2-213"><a href="ann-ex-r.html#cb2-213" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label, <span class="at">colour =</span> label), </span>
+<span id="cb2-214"><a href="ann-ex-r.html#cb2-214" tabindex="-1"></a>              <span class="at">data =</span> data_legend,</span>
+<span id="cb2-215"><a href="ann-ex-r.html#cb2-215" tabindex="-1"></a>              <span class="at">check_overlap =</span> <span class="cn">TRUE</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">nudge_x =</span> <span class="fl">0.01</span>,</span>
+<span id="cb2-216"><a href="ann-ex-r.html#cb2-216" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">2</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-217"><a href="ann-ex-r.html#cb2-217" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb2-218"><a href="ann-ex-r.html#cb2-218" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-219"><a href="ann-ex-r.html#cb2-219" tabindex="-1"></a>}</span>
+<span id="cb2-220"><a href="ann-ex-r.html#cb2-220" tabindex="-1"></a></span>
+<span id="cb2-221"><a href="ann-ex-r.html#cb2-221" tabindex="-1"></a>plot_prevs <span class="ot">&lt;-</span> <span class="cf">function</span> (data, <span class="at">nperiod =</span> <span class="dv">6</span>) {</span>
+<span id="cb2-222"><a href="ann-ex-r.html#cb2-222" tabindex="-1"></a>  joint_data <span class="ot">&lt;-</span> <span class="fu">do.call</span>(ts.union, <span class="fu">lapply</span>(data, <span class="cf">function</span>(x) {</span>
+<span id="cb2-223"><a href="ann-ex-r.html#cb2-223" tabindex="-1"></a>    first_date <span class="ot">&lt;-</span> <span class="fu">time</span>(x)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">deltat</span>(x)</span>
+<span id="cb2-224"><a href="ann-ex-r.html#cb2-224" tabindex="-1"></a>    <span class="co"># On rajoute la dernière date observée par lisibilité</span></span>
+<span id="cb2-225"><a href="ann-ex-r.html#cb2-225" tabindex="-1"></a>    <span class="fu">ts</span>(<span class="fu">c</span>(<span class="fu">window</span>(y, <span class="at">start =</span> first_date, <span class="at">end =</span> first_date), x), </span>
+<span id="cb2-226"><a href="ann-ex-r.html#cb2-226" tabindex="-1"></a>       <span class="at">start =</span> first_date, <span class="at">frequency =</span> <span class="fu">frequency</span>(x))</span>
+<span id="cb2-227"><a href="ann-ex-r.html#cb2-227" tabindex="-1"></a>  }))</span>
+<span id="cb2-228"><a href="ann-ex-r.html#cb2-228" tabindex="-1"></a>  </span>
+<span id="cb2-229"><a href="ann-ex-r.html#cb2-229" tabindex="-1"></a>  data_legend <span class="ot">&lt;-</span> </span>
+<span id="cb2-230"><a href="ann-ex-r.html#cb2-230" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sapply</span>(data, <span class="cf">function</span>(x) <span class="fu">tail</span>(<span class="fu">time</span>(x), <span class="dv">1</span>)),</span>
+<span id="cb2-231"><a href="ann-ex-r.html#cb2-231" tabindex="-1"></a>               <span class="at">y =</span> <span class="fu">sapply</span>(data, tail, <span class="dv">1</span>),</span>
+<span id="cb2-232"><a href="ann-ex-r.html#cb2-232" tabindex="-1"></a>               <span class="at">label =</span> <span class="fu">colnames</span>(joint_data))</span>
+<span id="cb2-233"><a href="ann-ex-r.html#cb2-233" tabindex="-1"></a>  forecast<span class="sc">::</span><span class="fu">autoplot</span>(joint_data, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb2-234"><a href="ann-ex-r.html#cb2-234" tabindex="-1"></a>    forecast<span class="sc">::</span><span class="fu">autolayer</span>(</span>
+<span id="cb2-235"><a href="ann-ex-r.html#cb2-235" tabindex="-1"></a>      <span class="fu">window</span>(y, <span class="at">start =</span> last_dates[<span class="dv">1</span>] <span class="sc">-</span> nperiod <span class="sc">*</span> <span class="fu">deltat</span>(y)),</span>
+<span id="cb2-236"><a href="ann-ex-r.html#cb2-236" tabindex="-1"></a>      <span class="at">colour =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-237"><a href="ann-ex-r.html#cb2-237" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb2-238"><a href="ann-ex-r.html#cb2-238" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb2-239"><a href="ann-ex-r.html#cb2-239" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> zoo<span class="sc">::</span>as.yearmon) <span class="sc">+</span></span>
+<span id="cb2-240"><a href="ann-ex-r.html#cb2-240" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label, <span class="at">colour =</span> label),</span>
+<span id="cb2-241"><a href="ann-ex-r.html#cb2-241" tabindex="-1"></a>              <span class="at">data =</span> data_legend,</span>
+<span id="cb2-242"><a href="ann-ex-r.html#cb2-242" tabindex="-1"></a>              <span class="at">check_overlap =</span> <span class="cn">TRUE</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">nudge_x =</span> <span class="fl">0.01</span>,</span>
+<span id="cb2-243"><a href="ann-ex-r.html#cb2-243" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">2</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-244"><a href="ann-ex-r.html#cb2-244" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-245"><a href="ann-ex-r.html#cb2-245" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span>
+<span id="cb2-246"><a href="ann-ex-r.html#cb2-246" tabindex="-1"></a>}</span>
+<span id="cb2-247"><a href="ann-ex-r.html#cb2-247" tabindex="-1"></a></span>
+<span id="cb2-248"><a href="ann-ex-r.html#cb2-248" tabindex="-1"></a>all_est <span class="ot">&lt;-</span> <span class="fu">c</span>(lp_est, <span class="fu">list</span>(<span class="st">&quot;LC param. locale&quot;</span> <span class="ot">=</span> loc_lc_est),</span>
+<span id="cb2-249"><a href="ann-ex-r.html#cb2-249" tabindex="-1"></a>             <span class="fu">list</span>(<span class="st">&quot;QL param. locale&quot;</span> <span class="ot">=</span> loc_ql_est), </span>
+<span id="cb2-250"><a href="ann-ex-r.html#cb2-250" tabindex="-1"></a>             rkhs_est,</span>
+<span id="cb2-251"><a href="ann-ex-r.html#cb2-251" tabindex="-1"></a>             <span class="fu">list</span>(<span class="at">FST =</span> fst_est))</span>
+<span id="cb2-252"><a href="ann-ex-r.html#cb2-252" tabindex="-1"></a>all_if <span class="ot">&lt;-</span> <span class="fu">c</span>(lp_if, <span class="fu">list</span>(<span class="st">&quot;LC param. locale&quot;</span> <span class="ot">=</span> loc_lc_if),</span>
+<span id="cb2-253"><a href="ann-ex-r.html#cb2-253" tabindex="-1"></a>            <span class="fu">list</span>(<span class="st">&quot;QL param. locale&quot;</span> <span class="ot">=</span> loc_ql_if), </span>
+<span id="cb2-254"><a href="ann-ex-r.html#cb2-254" tabindex="-1"></a>            rkhs_if,</span>
+<span id="cb2-255"><a href="ann-ex-r.html#cb2-255" tabindex="-1"></a>            <span class="fu">list</span>(<span class="at">FST =</span> fst_if))</span>
+<span id="cb2-256"><a href="ann-ex-r.html#cb2-256" tabindex="-1"></a>y_lim <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">102</span>, <span class="dv">105</span>)</span>
+<span id="cb2-257"><a href="ann-ex-r.html#cb2-257" tabindex="-1"></a>all_plots_est <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb2-258"><a href="ann-ex-r.html#cb2-258" tabindex="-1"></a>  <span class="fu">names</span>(all_est), </span>
+<span id="cb2-259"><a href="ann-ex-r.html#cb2-259" tabindex="-1"></a>  <span class="cf">function</span>(x) <span class="fu">plot_est</span>(all_est[[x]]) <span class="sc">+</span> </span>
+<span id="cb2-260"><a href="ann-ex-r.html#cb2-260" tabindex="-1"></a>    <span class="fu">ggtitle</span>(latex2exp<span class="sc">::</span><span class="fu">TeX</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Tendance-cycle avec %s&quot;</span>, x))) <span class="sc">+</span></span>
+<span id="cb2-261"><a href="ann-ex-r.html#cb2-261" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> y_lim)</span>
+<span id="cb2-262"><a href="ann-ex-r.html#cb2-262" tabindex="-1"></a>)</span>
+<span id="cb2-263"><a href="ann-ex-r.html#cb2-263" tabindex="-1"></a>all_plots_prev <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb2-264"><a href="ann-ex-r.html#cb2-264" tabindex="-1"></a>  <span class="fu">names</span>(all_if), </span>
+<span id="cb2-265"><a href="ann-ex-r.html#cb2-265" tabindex="-1"></a>  <span class="cf">function</span>(x) <span class="fu">plot_prevs</span>(all_if[[x]]) <span class="sc">+</span> </span>
+<span id="cb2-266"><a href="ann-ex-r.html#cb2-266" tabindex="-1"></a>    <span class="fu">ggtitle</span>(latex2exp<span class="sc">::</span><span class="fu">TeX</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Prévisions implicites avec %s&quot;</span>, x)))</span>
+<span id="cb2-267"><a href="ann-ex-r.html#cb2-267" tabindex="-1"></a>)</span>
+<span id="cb2-268"><a href="ann-ex-r.html#cb2-268" tabindex="-1"></a></span>
+<span id="cb2-269"><a href="ann-ex-r.html#cb2-269" tabindex="-1"></a><span class="fu">wrap_plots</span>(all_plots_est[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb2-270"><a href="ann-ex-r.html#cb2-270" tabindex="-1"></a><span class="fu">wrap_plots</span>(all_plots_prev[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb2-271"><a href="ann-ex-r.html#cb2-271" tabindex="-1"></a></span>
+<span id="cb2-272"><a href="ann-ex-r.html#cb2-272" tabindex="-1"></a><span class="fu">wrap_plots</span>(all_plots_est[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">6</span>)], <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb2-273"><a href="ann-ex-r.html#cb2-273" tabindex="-1"></a><span class="fu">wrap_plots</span>(all_plots_prev[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">6</span>)], <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb2-274"><a href="ann-ex-r.html#cb2-274" tabindex="-1"></a></span>
+<span id="cb2-275"><a href="ann-ex-r.html#cb2-275" tabindex="-1"></a><span class="fu">wrap_plots</span>(<span class="fu">c</span>(all_plots_est[<span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>],</span>
+<span id="cb2-276"><a href="ann-ex-r.html#cb2-276" tabindex="-1"></a>             all_plots_prev[<span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>]), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb2-277"><a href="ann-ex-r.html#cb2-277" tabindex="-1"></a></span>
+<span id="cb2-278"><a href="ann-ex-r.html#cb2-278" tabindex="-1"></a><span class="fu">wrap_plots</span>(<span class="fu">c</span>(all_plots_est[<span class="dv">10</span>], all_plots_prev[<span class="dv">10</span>]), <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="an-graphs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="an-noyaux.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["M2024-01_DT_Estimation-en-temps-reel-de-la-tendance-cycle.pdf", "M2024-01_DT_Estimation-en-temps-reel-de-la-tendance-cycle.tex"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

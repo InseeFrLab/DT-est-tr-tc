@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr" xml:lang="fr">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques</title>
+  <meta name="description" content="DT M2024/01" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="DT M2024/01" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles | Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques" />
+  
+  <meta name="twitter:description" content="DT M2024/01" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="conclusion.html"/>
+<link rel="next" href="an-graphs.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">DT M2024/01</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Résumé</a></li>
+<li class="chapter" data-level="" data-path="abstract.html"><a href="abstract.html"><i class="fa fa-check"></i>Abstract</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="sec-propMM.html"><a href="sec-propMM.html"><i class="fa fa-check"></i><b>1</b> Quelques propriétés sur les moyennes mobiles</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec:gain-deph"><i class="fa fa-check"></i><b>1.1</b> Fonctions de gain et de déphasage</a></li>
+<li class="chapter" data-level="1.2" data-path="sec-propMM.html"><a href="sec-propMM.html#propriétés-souhaitables-dune-moyenne-mobile"><i class="fa fa-check"></i><b>1.2</b> Propriétés souhaitables d’une moyenne mobile</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="sec-propMM.html"><a href="sec-propMM.html#préservation-de-tendances"><i class="fa fa-check"></i><b>1.2.1</b> Préservation de tendances</a></li>
+<li class="chapter" data-level="1.2.2" data-path="sec-propMM.html"><a href="sec-propMM.html#réduction-du-bruit"><i class="fa fa-check"></i><b>1.2.2</b> Réduction du bruit</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="sec-propMM.html"><a href="sec-propMM.html#sec-mmasym"><i class="fa fa-check"></i><b>1.3</b> Estimation en temps réel et moyennes mobiles asymétriques</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="sec-propMM.html"><a href="sec-propMM.html#subec:mmetprev"><i class="fa fa-check"></i><b>1.3.1</b> Moyennes mobiles asymétriques et prévision</a></li>
+<li class="chapter" data-level="1.3.2" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec:crit-qual"><i class="fa fa-check"></i><b>1.3.2</b> Indicateurs de qualité des moyennes mobiles asymétriques</a></li>
+<li class="chapter" data-level="1.3.3" data-path="sec-propMM.html"><a href="sec-propMM.html#subsec-formulegen"><i class="fa fa-check"></i><b>1.3.3</b> Formule générale de construction des moyennes mobiles</a></li>
+<li class="chapter" data-level="1.3.4" data-path="sec-propMM.html"><a href="sec-propMM.html#illustration"><i class="fa fa-check"></i><b>1.3.4</b> Illustration</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html"><i class="fa fa-check"></i><b>2</b> Régression non paramétrique et régression polynomiale locale</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#sec-proietti"><i class="fa fa-check"></i><b>2.1</b> Régression polynomiale : approche de Proietti et Luati</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-symétriques"><i class="fa fa-check"></i><b>2.1.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="2.1.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-lppasymf"><i class="fa fa-check"></i><b>2.1.2</b> Filtres asymétriques</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-localic"><i class="fa fa-check"></i><b>2.2</b> Paramétrisation locale des filtres asymétriques</a></li>
+<li class="chapter" data-level="2.3" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-lptimeliness"><i class="fa fa-check"></i><b>2.3</b> Extension avec le critère de <em>timeliness</em></a></li>
+<li class="chapter" data-level="2.4" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#subsec-graythomson"><i class="fa fa-check"></i><b>2.4</b> Régression polynomiale : Gray et Thomson</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-symétriques-1"><i class="fa fa-check"></i><b>2.4.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="2.4.2" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#filtres-asymétriques"><i class="fa fa-check"></i><b>2.4.2</b> Filtres asymétriques</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="sec-nonparamreg.html"><a href="sec-nonparamreg.html#sec-rkhs"><i class="fa fa-check"></i><b>2.5</b> Reproducing Kernel Hilbert Space (RKHS) : approche de Dagum et Bianconcini</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="subsec-GuggemosEtAl.html"><a href="subsec-GuggemosEtAl.html"><i class="fa fa-check"></i><b>3</b> Approche <em>Fidelity-Smoothness-Timeliness</em> (FST)</a></li>
+<li class="chapter" data-level="4" data-path="sec-WildiMcLeroy.html"><a href="sec-WildiMcLeroy.html"><i class="fa fa-check"></i><b>4</b> Filtres dépendant des données : trilemme ATS</a></li>
+<li class="chapter" data-level="5" data-path="sec-comparison.html"><a href="sec-comparison.html"><i class="fa fa-check"></i><b>5</b> Comparaison des différentes méthodes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="sec-comparison.html"><a href="sec-comparison.html#séries-simulées"><i class="fa fa-check"></i><b>5.1</b> Séries simulées</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="sec-comparison.html"><a href="sec-comparison.html#méthodologie"><i class="fa fa-check"></i><b>5.1.1</b> Méthodologie</a></li>
+<li class="chapter" data-level="5.1.2" data-path="sec-comparison.html"><a href="sec-comparison.html#comparaison"><i class="fa fa-check"></i><b>5.1.2</b> Comparaison</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="sec-comparison.html"><a href="sec-comparison.html#série-réelle"><i class="fa fa-check"></i><b>5.2</b> Série réelle</a></li>
+<li class="chapter" data-level="5.3" data-path="sec-comparison.html"><a href="sec-comparison.html#discussion"><i class="fa fa-check"></i><b>5.3</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="appendix"><span><b>Annexe</b></span></li>
+<li class="chapter" data-level="A" data-path="an-diag.html"><a href="an-diag.html"><i class="fa fa-check"></i><b>A</b> Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="an-diag.html"><a href="an-diag.html#formule-générale-de-construction-des-filtres"><i class="fa fa-check"></i><b>A.1</b> Formule générale de construction des filtres</a></li>
+<li class="chapter" data-level="A.2" data-path="an-diag.html"><a href="an-diag.html#liens-entre-les-différentes-méthodes"><i class="fa fa-check"></i><b>A.2</b> Liens entre les différentes méthodes</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="an-diag.html"><a href="an-diag.html#critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>A.2.1</b> Critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
+<li class="chapter" data-level="A.2.2" data-path="an-diag.html"><a href="an-diag.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>A.2.2</b> Équivalence avec les moindres carrés pondérés</a></li>
+<li class="chapter" data-level="A.2.3" data-path="an-diag.html"><a href="an-diag.html#rkhs-et-polynômes-locaux"><i class="fa fa-check"></i><b>A.2.3</b> RKHS et polynômes locaux</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="an-diag.html"><a href="an-diag.html#diagrammes-synthétiques"><i class="fa fa-check"></i><b>A.3</b> Diagrammes synthétiques</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="an-graphs.html"><a href="an-graphs.html"><i class="fa fa-check"></i><b>B</b> Coefficients, fonctions de gain et de déphasage</a></li>
+<li class="chapter" data-level="C" data-path="ann-ex-r.html"><a href="ann-ex-r.html"><i class="fa fa-check"></i><b>C</b> Exemple sous R</a></li>
+<li class="chapter" data-level="D" data-path="an-noyaux.html"><a href="an-noyaux.html"><i class="fa fa-check"></i><b>D</b> Noyaux et régression locale</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="an-noyaux.html"><a href="an-noyaux.html#sec-kernels"><i class="fa fa-check"></i><b>D.1</b> Les différents noyaux</a></li>
+<li class="chapter" data-level="D.2" data-path="an-noyaux.html"><a href="an-noyaux.html#sec-sympolyfilter"><i class="fa fa-check"></i><b>D.2</b> Quelques filtres symétriques particuliers</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estimation en temps réel de la tendance-cycle : apport de l’utilisation des moyennes mobiles asymétriques</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!-- <script type="text/x-mathjax-config"> -->
+    <!-- MathJax.Hub.Config({ -->
+            <!--   TeX: { -->
+                    <!--     Macros: { -->
+                            <!--       NN: "{\\mathbb{N}}", -->
+                            <!--       ZZ: "{\\mathbb{Z}}", -->
+                            <!--       QQ: "{\\mathbb{Q}}", -->
+                            <!--       RR: "{\\mathbb{R}}", -->
+                            <!--       shiftset: "{\\mathcal{D}}", -->
+                            <!--       dx: ["{\\mathrm{d}^{#1}\\mspace{-1mu}\\mathord{#2}}", 2, ""], -->
+                            <!--       indic: "{\\unicode{x1D7D9}}", -->
+                            <!--       prob: "\\mathop{\\mathbb{P}}", -->
+                            <!--       esp: "\\mathop{\\mathbb{E}}", -->
+                            <!--       var: "\\mathop{\\mathbb{V}\\text{ar}}", -->
+                            <!--       cov: "\\mathop{\\mathbb{C}\\text{ov}}", -->
+                            <!--       PP: ["{\\prob\\left({#1}\\right)}", 1], -->
+                            <!--       EE: ["{\\esp\\left[{#1}\\right]}", 1], -->
+                            <!--       VV: ["{\\var\\left[{#1}\\right]}", 1], -->
+                            <!--       CC: ["{\\cov\\left[{#1}\\right]}", 1], -->
+                            <!--       normal: ["{\\mathcal{N}\\left({#1},{#2}\\right)}", 2], -->
+                            <!--       ou: ["{#1}_{\\text{ou}}", 1], -->
+                            <!--       oui: ["{#1}_{\\text{ou},#2}", 2], -->
+                            <!--       pv: "{\\mathfrak{p}}", -->
+                            <!--       qv: "{\\mathfrak{q}}", -->
+                            <!--       zs: "{\\mathfrak{z}}", -->
+                            <!--       ts: "{\\mathfrak{t}}", -->
+                            <!--       sign: "{\\mathfrak{s}}", -->
+                            <!--       shifts: "{\\delta}", -->
+                            <!--       optim: "{\\beta}", -->
+                            <!--       param: "{\\theta}", -->
+                            <!--       unif: ["{\\mathcal{U}\\left({#1}\\right)}", 1], -->
+                            <!--       argmin: "\\mathop{\\mathrm{argmin}}", -->
+                            <!--       diag: "\\mathop{\\mathrm{Diag}}", -->
+                            <!--       rang: "\\mathop{\\mathrm{rang}}", -->
+                            <!--       pa: "\\mathop{\\mathrm{pa}}", -->
+                            <!--       mrca: "\\mathop{\\mathrm{mrca}}", -->
+                            <!--       desc: "\\mathop{\\mathrm{desc}}", -->
+                            <!--       warning: ["\\color{red}{{#1}}", 1] -->
+                            <!--     } -->
+                    <!--   } -->
+            <!-- }); -->
+    <!-- </script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    TeX: {Macros: {
+            E: "{\\mathbb{E}}"
+        },
+        Augment: {
+        Definitions: {
+          delimiter: {
+            "\\llbracket": '\u27E6',
+            '\\rrbracket': '\u27E7'
+          }}
+        }}
+    });
+</script>
+    <body>
+    <div style="display:none" aria-hidden="true">
+    \(
+        \newcommand\R{\mathbb{R}}
+        \newcommand\Z{\mathbb{Z}}
+        \newcommand\LL{\mathbb{L}}
+        \newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+        \newcommand{\V}[1]{\mathbb{V}\left[#1\right]}
+        \newcommand{\ps}[2]{\left\langle #1 \,,\, #2 \right\rangle}
+        \newcommand\1{\mathbb{1}}
+        \newcommand\N{\mathbb{N}}
+        \newcommand\Norm{\mathcal{N}}
+        \newcommand{\transp}[1]{{}^t\!#1}
+        \newcommand\ud{\,\mathrm{d}}
+        \DeclareMathOperator*{\argmax}{argmax}
+        \DeclareMathOperator*{\argmin}{argmin}
+        \DeclareMathOperator{\e}{e}
+        \DeclareMathOperator{\Cov}{Cov}
+        \DeclareMathOperator{\Determinant}{det}
+        \newcommand{\determinant}[1]{\Determinant\left(#1\right)}
+    \)
+    </div>
+    </body>
+            
+<div id="an-diag" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">A</span> Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles<a href="an-diag.html#an-diag" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Cette annexe montre comment tous les filtres étudiés peuvent se retrouver à partir d’une formule générale de construction des moyennes mobiles.
+Elle décrit également les relations d’équivalences entre les différentes méthodes.
+Enfin, des graphiques synthétiques résument ces propriétés.</p>
+<div id="formule-générale-de-construction-des-filtres" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">A.1</span> Formule générale de construction des filtres<a href="an-diag.html#formule-générale-de-construction-des-filtres" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pour établir une formule générale englobant les principaux filtres linéaires, <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA">2018</a>)</span> définissent deux critères.
+En changeant légèrement les notations utilisées par les auteurs afin d’avoir une formulation plus générale, ces deux critères peuvent s’écrire :
+<span class="math display" id="eq:formulegen2" id="eq:formulegen1">\[\begin{align}
+I(\boldsymbol\theta,q,y_t,u_t)&amp;=\E{(\Delta^{q}(M_{\boldsymbol\theta} y_t-u_t))^{2}} \tag{15} \\
+J(\boldsymbol\theta,f, \omega_1,\omega_2)&amp;=\int_{\omega_1}^{\omega_2} f\left[\rho_{\boldsymbol\theta}(\omega), \varphi_{\boldsymbol\theta} (\omega), \omega\right] \ud \omega \tag{16}
+\end{align}\]</span>
+où <span class="math inline">\(y_t\)</span> est la série étudiée, <span class="math inline">\(u_t\)</span> une série de référence<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a> et <span class="math inline">\(\Delta\)</span> est l’opérateur différence (<span class="math inline">\(\Delta y_t=y_t-y_{t-1}\)</span> et <span class="math inline">\(\Delta^q=\underbrace{\Delta \circ \dots \circ \Delta}_{q\text{ fois}}\)</span> pour <span class="math inline">\(q\in\N\)</span>).
+Dans la majorité des cas, la fonction <span class="math inline">\(f\)</span> ne dépendra que de la fonction de gain, <span class="math inline">\(\rho_{\boldsymbol\theta}\)</span>, et de la fonction de déphasage, <span class="math inline">\(\varphi_{\boldsymbol\theta}\)</span>.
+Dans ce cas, par simplification on écrira <span class="math inline">\(f\left[\rho_{\boldsymbol\theta}(\omega), \varphi_{\boldsymbol\theta} (\omega), \omega\right] = f\left[\rho_{\boldsymbol\theta}(\omega), \varphi_{\boldsymbol\theta} (\omega)\right]\)</span>.</p>
+<p>La majorité des filtres linéaires peut s’obtenir par une minimisation d’une somme pondérée de ces critères, sous contrainte linéaire sur les coefficients :
+<span class="math display">\[
+\begin{cases}
+\underset{\boldsymbol\theta}{\min} &amp; \sum_i \alpha_i I(\boldsymbol\theta,\, q_i,\, y_t,\, u_t^{(i)})+
+\beta_iJ(\boldsymbol\theta,\, f_i,\, \omega_{1,i},\, \omega_{2,i})\\
+s.t. &amp; \boldsymbol C\boldsymbol \theta=\boldsymbol a
+\end{cases}
+\]</span></p>
+<p>En effet :</p>
+<ul>
+<li><p>L’extension des méthodes polynomiales de <span class="citation">Proietti et Luati (<a href="#ref-proietti2008">2008</a>)</span> présentée dans la section <a href="sec-nonparamreg.html#subsec-lptimeliness">2.3</a> revient en effet à minimiser une somme pondérée de l’erreur quadratique de révision :
+<span class="math display">\[
+\E{\left( \sum_{i=-h}^h\theta^s_{i}y_{t+s}-\sum_{i=-h}^qv_iy_{t+s} \right)^2}
+= I(v,\,0,\,y_t,\,M_{\boldsymbol \theta^s} y_t),
+\]</span>
+et du critère de <em>timeliness</em> :
+<span class="math display">\[
+T_g(\boldsymbol\theta) = J(f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2,\,\omega_1, \,\omega_2).
+\]</span>
+sous une contrainte linéaire.</p></li>
+<li><p>Les critères des filtres symétriques de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996">1996</a>)</span> (section <a href="sec-nonparamreg.html#subsec-graythomson">2.4</a>) sont :
+<span class="math display">\[\begin{align*}
+F_{GT}(\boldsymbol\theta)&amp;=I(\boldsymbol\theta,0,y_t,g_t),\\
+S_{GT}(\boldsymbol\theta)&amp;=I(\boldsymbol\theta,d+1,y_t,0).
+\end{align*}\]</span>
+Les filtres asymétriques sont construits en minimisant l’erreur quadratique moyenne des révisions sous contraintes linéaires (préservation d’un polynôme de degré <span class="math inline">\(p\)</span>).</p></li>
+<li><p>Les trois critères de la méthode FST de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA">2018</a>)</span> se retrouvent en notant <span class="math inline">\(y_t=TC_t+\varepsilon_t,\quad\varepsilon_t\sim\Norm(0,\sigma^2)\)</span> avec <span class="math inline">\(TC_t\)</span> une tendance déterministe :
+<span class="math display">\[\begin{align*}
+F_g(\boldsymbol\theta) &amp; = I(\boldsymbol\theta,\,0,\,y_t,\,\E{M_{\boldsymbol\theta} y_t})\\
+S_g(\boldsymbol\theta) &amp; = I(\boldsymbol\theta,\,q,\,y_t,\,\E{M_{\boldsymbol\theta} y_t})\\
+T_g(\boldsymbol\theta) &amp; = J(f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2,\,\omega_1, \,\omega_2).
+\end{align*}\]</span></p></li>
+<li><p>Les quatre critères <span class="math inline">\(A_w\)</span>, <span class="math inline">\(T_w\)</span>, <span class="math inline">\(S_w\)</span> et <span class="math inline">\(R_w\)</span> des filtres de <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019">2019</a>)</span> sont des cas particuliers du critère <span class="math inline">\(J\)</span> défini dans l’équation <a href="an-diag.html#eq:formulegen1">(15)</a>.
+En notant :
+<span class="math display">\[
+\begin{cases}
+  f_1\colon&amp;(\rho,\varphi, \omega)\mapsto2\left(\rho_s(\omega)-\rho\right)^{2}h(\omega) \\
+  f_2\colon&amp;(\rho,\varphi, \omega)\mapsto8\rho_s(\omega)\rho\sin^{2}\left(\frac{\varphi}{2}\right)h(\omega)
+\end{cases},
+\]</span>
+on a :
+<span class="math display">\[\begin{align*}
+A_w(\boldsymbol\theta)&amp;= J(\boldsymbol\theta,f_1,0,\omega_1),\\
+T_w(\boldsymbol\theta)&amp;= J(\boldsymbol\theta,f_2,0,\omega_1),\\
+S_w(\boldsymbol\theta)&amp;= J(\boldsymbol\theta,f_1,\omega_1,\pi),\\
+R_w(\boldsymbol\theta)&amp;= J(\boldsymbol\theta,f_2,\omega_1,\pi).
+\end{align*}\]</span></p></li>
+<li><p>Les filtres des espaces de Hilbert à noyau reproduisant correspondent à une sélection optimale du paramètre <span class="math inline">\(b\)</span> selon les critères précédents, en imposant comme contrainte linéaire que les coefficients soient sous la forme <span class="math inline">\(w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}\)</span>.</p></li>
+</ul>
+</div>
+<div id="liens-entre-les-différentes-méthodes" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">A.2</span> Liens entre les différentes méthodes<a href="an-diag.html#liens-entre-les-différentes-méthodes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">A.2.1</span> Critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em><a href="an-diag.html#critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Les critères <span class="math inline">\(F_g\)</span> et <span class="math inline">\(S_g\)</span> peuvent se déduire de <span class="math inline">\(F_{GT}\)</span> et <span class="math inline">\(S_{GT}\)</span>.
+Les approches de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996">1996</a>)</span> et <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA">2018</a>)</span> sont donc équivalentes pour la construction de filtres symétriques.</p>
+<p>Notons <span class="math inline">\(\boldsymbol x_{t}=\begin{pmatrix}1 &amp; t &amp; t^{2} &amp; \cdots &amp; t^{d}\end{pmatrix}&#39;\)</span>, <span class="math inline">\(\boldsymbol \beta=\begin{pmatrix}\beta_{0} &amp; \cdots &amp; \beta_{d}\end{pmatrix}&#39;\)</span>.</p>
+<p>Pour le critère de <em>fidelity</em> :
+<span class="math display">\[
+\hat{g}_{t}-g_{t}=\left(\sum_{j=-h}^{+h}\theta_{j}\boldsymbol x_{t+j}-\boldsymbol x_{t}\right)\boldsymbol \beta+\sum_{j=-h}^{+h}\theta_{j}\varepsilon_{t+j}+\sum_{j=-h}^{+h}\theta_{j}(\xi_{t+j}-\xi_{t}),
+\]</span>
+Si <span class="math inline">\(\theta\)</span> préserve les polynômes de degré <span class="math inline">\(d\)</span> alors <span class="math inline">\(\sum_{j=-h}^{+h}\theta_{j}\boldsymbol x_{t+j}=\boldsymbol x_{t}\)</span>.
+Puis, comme <span class="math inline">\(\xi_{t}\)</span> et <span class="math inline">\(\varepsilon_{t}\)</span> sont de moyenne nulle et sont non corrélés :
+<span class="math display">\[
+F_{GT}(\boldsymbol\theta)=\E{(\hat{g}_{t}-g_{t})^{2}}=\boldsymbol \theta^{&#39;}\left(\sigma^{2}\boldsymbol I+\boldsymbol \Omega\right)\boldsymbol \theta.
+\]</span>
+Si <span class="math inline">\(\xi_t=0\)</span> alors <span class="math inline">\(\boldsymbol \Omega=0\)</span> et <span class="math inline">\(F_{GT}(\boldsymbol\theta)=F_g(\boldsymbol\theta)\)</span>.</p>
+<p>Pour la <em>smoothness</em> on a :
+<span class="math display">\[
+\nabla^{q}\hat{g}_{t}=\sum_{j=h}^{h}\theta_{j}\underbrace{\nabla^{q}\left(\left(x_{j}-x_{0}\right)\beta\right)}_{=0\text{ si }q\geq d+1}+\sum_{j=h}^{h}\theta_{j}\nabla^{q}\varepsilon_{t+j}+\sum_{j=h}^{h}\theta_{j}\nabla^{q}\xi_{t+j}.
+\]</span>
+D’où pour <span class="math inline">\(q=d+1\)</span> :
+<span class="math display">\[
+S_{GT}(\boldsymbol\theta)=\E{(\nabla^{q}\hat{g}_{t})^{2}}=\boldsymbol \theta^{&#39;}\left(\sigma^{2}\boldsymbol B_{q}+\boldsymbol \Gamma_{q}\right)\theta.
+\]</span>
+On peut, par ailleurs, montrer que pour toute série temporelle <span class="math inline">\(X_t\)</span>,
+<span class="math display">\[
+\nabla^{q}(M_{\boldsymbol\theta}X_{t})=\left(-1\right)^{q}\sum_{k\in\Z}\left(\nabla^{q}\theta_{k}\right)X_{t+k-q},
+\]</span>
+avec <span class="math inline">\(\theta_k=0\)</span> pour <span class="math inline">\(|k|\geq h+1\)</span>.
+Avec <span class="math inline">\(\xi_t=0\)</span> on trouve donc que <span class="math inline">\(S_{GT}(\boldsymbol\theta)=\sigma^2S_g(\boldsymbol\theta)\)</span>.</p>
+</div>
+<div id="équivalence-avec-les-moindres-carrés-pondérés" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">A.2.2</span> Équivalence avec les moindres carrés pondérés<a href="an-diag.html#équivalence-avec-les-moindres-carrés-pondérés" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Du fait de la forme des filtres obtenus par la méthode de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA">2018</a>)</span>, lorsque les contraintes imposées sont la préservation des tendances de degré <span class="math inline">\(d\)</span>, celle-ci est équivalente à une estimation locale d’une tendance polynomiale de degré <span class="math inline">\(d\)</span> par moindres carrés généralisés.
+En effet, dans ce cas, la solution est <span class="math inline">\(\hat{\boldsymbol \theta} = \boldsymbol \Sigma^{-1}\boldsymbol X_p&#39;\left(\boldsymbol X_p\boldsymbol \Sigma^{-1}\boldsymbol X_p&#39;\right)^{-1}\boldsymbol e_1\)</span> avec <span class="math inline">\(\boldsymbol \Sigma=\alpha \boldsymbol F+\beta \boldsymbol S+ \gamma \boldsymbol T\)</span>, et c’est l’estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est <span class="math inline">\(\boldsymbol \Sigma\)</span>.
+L’équivalence entre les deux méthodes peut donc se voir comme un cas particulier de l’équivalence entre les moindres carrés pondérés et les moindres carrés généralisés.
+C’est par exemple le cas des filtres symétriques d’Henderson qui peuvent s’obtenir par les deux méthodes.</p>
+<p>Dans ce sens, <span class="citation">Henderson (<a href="#ref-henderson1916note">1916</a>)</span> a montré que les poids <span class="math inline">\(\boldsymbol w=(w_{-p},\dots, w_{f})\)</span> associés à une moyenne mobile issue de la régression polynomiale locale par moindres carrés pondérés pouvaient s’écrire sous la forme :
+<span class="math display">\[
+w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
+\]</span>
+Il a également montré l’inverse : toute moyenne mobile <span class="math inline">\(\boldsymbol \theta=(\theta_{-p},\dots, \theta_{f})\)</span> qui préserve les tendances de degré <span class="math inline">\(d\)</span> et dont le diagramme des coefficients (c’est-à-dire la courbe de <span class="math inline">\(\theta_t\)</span> en fonction de <span class="math inline">\(t\)</span>) change au plus <span class="math inline">\(d\)</span> fois de signes peut être obtenue par une régression polynomiale locale de degré <span class="math inline">\(p\)</span> estimée par moindres carrés pondérés.
+Pour cela il suffit de trouver un polynôme <span class="math inline">\(P\left(\frac{X}{p+f+1}\right)\)</span> de degré inférieur ou égal à <span class="math inline">\(d\)</span> et dont les changements de signes coïncident avec les changements de signes de <span class="math inline">\(\boldsymbol \theta\)</span>.
+Le noyau associé est alors <span class="math inline">\(\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}\)</span>.
+C’est le cas de tous les filtres symétriques issus de l’approche FST et de la majorité des filtres asymétriques (figure <a href="an-diag.html#fig:thhendersonh6">15</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:thhendersonh6"></span>
+<img src="img/bookdown/html/thhendersonh6-1.jpg" alt="Ensemble des poids pour lesquels la méthode FST n'est pas équivalente aux moindres carrés pondérés pour $h=6$ (filtre symétrique de 13 termes), sous contrainte de préservation des polynômes de degré au plus 3 ($d=0,1,2,3$)." width="1050" />
+<p class="caption">
+Figure 15 : Ensemble des poids pour lesquels la méthode FST n’est pas équivalente aux moindres carrés pondérés pour <span class="math inline">\(h=6\)</span> (filtre symétrique de 13 termes), sous contrainte de préservation des polynômes de degré au plus 3 (<span class="math inline">\(d=0,1,2,3\)</span>).
+</p>
+</div>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+La <em>smoothness</em> est calculée avec le paramètre <span class="math inline">\(d=3\)</span> (<span class="math inline">\(S_g(\boldsymbol \theta) = \sum_{j}(\nabla^{3}\theta_{j})^{2}\)</span>), comme pour le filtre symétrique d’Henderson.
+</p>
+<p class="caption">
+Les poids sont calculés à partir d’un quadrillage de 200 points de l’intervalle <span class="math inline">\([0,1]\)</span> et en ne gardant que ceux tels que leur somme fasse 1.
+</p>
+<p class="caption">
+Lorsque tous les filtres FST sont équivalents à une approche polynomiale, aucun graphique n’est tracé. Pour un filtre symétrique de 13 ermes, la méthode FST est donc équivalente à une approche polynômiale sauf lorsqu’on ne contraint que la préservation des constante (<span class="math inline">\(d=0\)</span>), pour les filtres nécessitant au plus deux observations futures (<span class="math inline">\(q=0,1\)</span> ou 2) et seulement lorsque le poids associé à la <em>timeliness</em> est proche de 1.
+</p>
+</div>
+<p>Plus récemment, <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011">2011</a>)</span> se sont intéressés aux cas d’équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
+Ils montrent que le noyau d’Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, <span class="math inline">\(\varepsilon_t\)</span>, est un processus moyenne mobile (MA) non inversible d’ordre 1 (i.e., <span class="math inline">\(\varepsilon_t=(1-B)\xi_t\)</span>, avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).
+Dans ce cas, la matrice <span class="math inline">\(\boldsymbol \Sigma\)</span> de variance-covariance correspond à la matrice obtenue par le critère de <em>smoothness</em> avec le paramètre <span class="math inline">\(q=2\)</span> (<span class="math inline">\(\sum_{j}(\nabla^{2}\theta_{j})^{2} = \boldsymbol \theta&#39;\boldsymbol \Sigma\boldsymbol \theta\)</span>) : il y a donc équivalence avec l’approche FST.
+De même, le noyau d’Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d’ordre 2 (i.e., <span class="math inline">\(\varepsilon_t=(1-B)^2\xi_t\)</span>, avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).</p>
+</div>
+<div id="rkhs-et-polynômes-locaux" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">A.2.3</span> RKHS et polynômes locaux<a href="an-diag.html#rkhs-et-polynômes-locaux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Comme montré dans la section précédente, la théorie des espaces de Hilbert à noyau reproduisant permet de reproduire les filtres symétriques par approximation polynomiale locale.
+Comme le montrent <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011">2011</a>)</span>, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l’approximation polynomiale locale mais en utilisant une fenêtre d’estimation asymétrique.
+Cependant, ils ne peuvent pas être obtenus par la formalisation de <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008">2008</a>)</span> mais par une discrétisation différente de la formule <a href="sec-nonparamreg.html#eq:rkhskernelfun">(11)</a> :
+<span class="math display">\[
+K_{d+1}(t)=\frac{\det{\boldsymbol H_{d+1}[1,\boldsymbol x_t]}}{\det{\boldsymbol H_{d+1}}}f_0(t),
+\]</span>
+où <span class="math inline">\(\boldsymbol H_{d+1}[1,\boldsymbol x_t]\)</span> est la matrice obtenue en remplaçant la première ligne de <span class="math inline">\(\boldsymbol H_{d+1}\)</span> par <span class="math inline">\(\boldsymbol x_t=\begin{pmatrix} 1 &amp; t &amp; t^2 &amp; \dots &amp; t^d\end{pmatrix}&#39;\)</span>.
+Dans le cas discret, <span class="math inline">\(f_0(t)\)</span> est remplacé par <span class="math inline">\(\kappa_j\)</span> et en remplaçant les moments théoriques par les moments empiriques <span class="math inline">\(\boldsymbol H_{d+1}\)</span> devient <span class="math inline">\(\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p\)</span> et les coefficients du filtre asymétrique sont obtenus en utilisant la formule :
+<span class="math display">\[
+w_{a,j}=\frac{\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p[1,\boldsymbol x_j]}
+}{
+\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p}
+}\kappa_j.
+\]</span>
+En effet, la règle de Cramer permet de trouver une solution explicite à l’équation des moindres carrés <span class="math inline">\((\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p)\hat{\boldsymbol \beta}=\boldsymbol X&#39;_p\boldsymbol K_p \boldsymbol y_p\)</span> où <span class="math inline">\(\hat \beta_0=\hat m_t\)</span> :
+<span class="math display">\[
+\hat \beta_0 = \frac{\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p[1,\boldsymbol b]}}{\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p}}f_0(t)
+\quad\text{où}\quad \boldsymbol b=\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol y_p.
+\]</span>
+Comme <span class="math inline">\(\boldsymbol b=\sum_{j=-h}^q\boldsymbol x_j\kappa_jy_{t+j}\)</span> il vient :
+<span class="math display">\[
+\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p[1,\boldsymbol b]} = \sum_{j=-h}^q\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p[1,\boldsymbol x_j]}\kappa_jy_{t+j}.
+\]</span>
+Et enfin :
+<span class="math display">\[
+\hat \beta_0 = \hat m_t= \sum_{j=-h}^q\frac{\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p[1,\boldsymbol x_j]}
+}{
+\det{\boldsymbol X&#39;_p\boldsymbol K_p\boldsymbol X_p}
+}\kappa_j y_{t+j}.
+\]</span></p>
+<!-- ```{r thhendersonh11d01, fig.cap = "Ensemble des poids pour lesquels la méthode FST n'est pas équivalente aux moindres carrés pondérés pour $h=11$  (filtre symétrique de 23 termes), sous contrainte de préservation des polynômes de degré au plus 2 ($d=0,1,2$).",fig.height=height_cube*5} -->
+<!-- poids_non_equiv <- readRDS(sprintf("data/th_henderson/poids_non_equiv_h%i.RDS",11)) -->
+<!-- par(mfrow = c(5,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for (p in 0:3){ -->
+<!--     for(q in names(poids_non_equiv[[sprintf("p=%i",p)]])){ -->
+<!--         titre <- sprintf("d = %i - %s", p, q) -->
+<!--         data <- poids_non_equiv[[sprintf("p=%i",p)]][[q]] -->
+<!--         if(nrow(data)>0){ -->
+<!--             scatter_3D(poids_non_equiv[[sprintf("p=%i",p)]][[q]], -->
+<!--                        theta = 150, -->
+<!--                        titre = titre) -->
+<!--         } -->
+<!--     } -->
+<!-- } -->
+<!-- ``` -->
+</div>
+</div>
+<div id="diagrammes-synthétiques" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">A.3</span> Diagrammes synthétiques<a href="an-diag.html#diagrammes-synthétiques" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Les figures <a href="an-diag.html#fig:diag-gen-sym-fig">16</a> et <a href="an-diag.html#fig:diag-gen-asym-fig">17</a> résument les liens entre toutes les méthodes.</p>
+<div style="page-break-after: always;"></div>
+<!-- Diagrammes générés une seule fois pour la création des fichiers -->
+<!-- ```{r diag-gen-sym, echo=FALSE, engine='tikz', fig.ext=if (is_latex) 'pdf' else 'png', fig.cap="Synthèse des méthodes de construction de moyennes mobiles symétriques $\\boldsymbol\\theta=(\\theta_{-h},\\dots,\\theta_{h})$ de $2h+1$ termes.", engine.opts = list(template = "img/tikz2pdf.tex"), fig.lecture = notations, out.extra = out.extra, out.width = out.width,fig.pos="!ht", eval=TRUE} -->
+<!-- \input{diagrams/sym.tex} -->
+<!-- ``` -->
+<!-- ```{r diag-gen-asym, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (is_latex) 'pdf' else 'png', fig.cap="Synthèse des méthodes de construction de moyennes mobiles asymétriques $\\boldsymbol\\theta=(\\theta_{-h},\\dots,\\theta_{q})$, $0\\leq q< h$ avec $\\boldsymbol\\theta^s$ le filtre symétrique de référence de $2h+1$ termes.", engine.opts = list(template = "img/tikz2pdf.tex"), fig.lecture = notationsasym, out.extra = out.extra, out.width= out.width,fig.pos="!ht",eval=TRUE} -->
+<!-- \input{diagrams/asym.tex} -->
+<!-- ``` -->
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diag-gen-sym-fig"></span>
+<img src="img/diagrams/diag-gen-sym-1.png" alt="Synthèse des méthodes de construction de moyennes mobiles symétriques $\boldsymbol\theta=(\theta_{-h},\dots,\theta_{h})$ de $2h+1$ termes." width="100%" />
+<p class="caption">
+Figure 16 : Synthèse des méthodes de construction de moyennes mobiles symétriques <span class="math inline">\(\boldsymbol\theta=(\theta_{-h},\dots,\theta_{h})\)</span> de <span class="math inline">\(2h+1\)</span> termes.
+</p>
+</div>
+<div id="lecture" class="caption">
+<p id="lecture" class="title caption">
+<span class="math inline">\(\boldsymbol X = \boldsymbol X_d = \begin{pmatrix} \boldsymbol x_0 \quad\cdots \quad \boldsymbol x_d \end{pmatrix}\)</span> avec <span class="math inline">\(\boldsymbol x_i=\begin{pmatrix} (-h)^i \quad \cdots \quad (h)^i\end{pmatrix}&#39;\)</span>.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diag-gen-asym-fig"></span>
+<img src="img/diagrams/diag-gen-asym-1.png" alt="Synthèse des méthodes de construction de moyennes mobiles asymétriques $\boldsymbol\theta=(\theta_{-h},\dots,\theta_{q})$, $0\leq q&lt; h$ avec $\boldsymbol\theta^s$ le filtre symétrique de référence de $2h+1$ termes." width="100%" />
+<p class="caption">
+Figure 17 : Synthèse des méthodes de construction de moyennes mobiles asymétriques <span class="math inline">\(\boldsymbol\theta=(\theta_{-h},\dots,\theta_{q})\)</span>, <span class="math inline">\(0\leq q&lt; h\)</span> avec <span class="math inline">\(\boldsymbol\theta^s\)</span> le filtre symétrique de référence de <span class="math inline">\(2h+1\)</span> termes.
+</p>
+</div>
+<div id="lecture" class="caption">
+<p id="lecture" class="title caption">
+<span class="math inline">\(\boldsymbol X_d = \begin{pmatrix} \boldsymbol x_0 \quad\cdots \quad \boldsymbol x_d \end{pmatrix}\)</span> avec <span class="math inline">\(\boldsymbol x_i=\begin{pmatrix} (-h)^i \quad \cdots \quad (q)^i\end{pmatrix}&#39;\)</span> et <span class="math inline">\(\boldsymbol X=\boldsymbol X_d\)</span> avec <span class="math inline">\(q=h\)</span>.
+</p>
+</div>
+
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<h3>Références<a href="références.html#références" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-dagumbianconcini2008" class="csl-entry">
+Dagum, Estela Bee, et Silvia Bianconcini. 2008. <span>« <span>The Henderson Smoother in Reproducing Kernel Hilbert Space</span> »</span>. <em>Journal of Business &amp; Economic Statistics</em> 26: 536‑45. <a href="https://ideas.repec.org/a/bes/jnlbes/v26y2008p536-545.html">https://ideas.repec.org/a/bes/jnlbes/v26y2008p536-545.html</a>.
+</div>
+<div id="ref-GrayThomson1996" class="csl-entry">
+Gray, Alistair, et Peter Thomson. 1996. <span>« Design of Moving-Average Trend Filters using Fidelity and Smoothness Criteria »</span>. In <em>Athens Conference on Applied Probability and Time Series Analysis</em>, édité par P. M. Robinson et Murray Rosenblatt, 205‑19. New York, NY: Springer New York. <a href="https://www.census.gov/library/working-papers/1996/adrm/rr96-01.html">https://www.census.gov/library/working-papers/1996/adrm/rr96-01.html</a>.
+</div>
+<div id="ref-ch15HBSA" class="csl-entry">
+Grun-Rehomme, Michel, Fabien Guggemos, et Dominique Ladiray. 2018. <span>« Asymmetric Moving Averages Minimizing Phase Shift »</span>. <em>Handbook on Seasonal Adjustment</em>. <a href="https://ec.europa.eu/eurostat/web/products-manuals-and-guidelines/-/KS-GQ-18-001">ec.europa.eu/eurostat/web/products-manuals-and-guidelines/-/KS-GQ-18-001</a>.
+</div>
+<div id="ref-henderson1916note" class="csl-entry">
+Henderson, Robert. 1916. <span>« Note on graduation by adjusted average »</span>. <em>Transactions of the actuarial society of America</em> 17: 43‑48.
+</div>
+<div id="ref-LuatiProietti2011" class="csl-entry">
+Luati, Alessandra, et Tommaso Proietti. 2011. <span>« On the equivalence of the weighted least squares and the generalised least squares estimators, with applications to kernel smoothing »</span>. <em>Annals of the Institute of Statistical Mathematics</em> 63 (4): 851‑71. <a href="https://doi.org/10.1007/s10463-009-0267-8">https://doi.org/10.1007/s10463-009-0267-8</a>.
+</div>
+<div id="ref-proietti2008" class="csl-entry">
+Proietti, Tommaso, et Alessandra Luati. 2008. <span>« Real time estimation in local polynomial regression, with application to trend-cycle analysis »</span>. <em>Ann. Appl. Stat.</em> 2 (4): 1523‑53. <a href="https://doi.org/10.1214/08-AOAS195">https://doi.org/10.1214/08-AOAS195</a>.
+</div>
+<div id="ref-trilemmaWMR2019" class="csl-entry">
+———. 2019. <span>« The trilemma between accuracy, timeliness and smoothness in real-time signal extraction »</span>. <em>International Journal of Forecasting</em> 35 (3): 1072‑84. <a href="https://EconPapers.repec.org/RePEc:eee:intfor:v:35:y:2019:i:3:p:1072-1084">https://EconPapers.repec.org/RePEc:eee:intfor:v:35:y:2019:i:3:p:1072-1084</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="35">
+<li id="fn35"><p>
+La série de référence est en général un estimateur robuste de la tendance-cycle de <span class="math inline">\(Y_t\)</span> que l’on cherche à approcher par application de la moyenne mobile <span class="math inline">\(M_{\boldsymbol\theta}\)</span> sur les observations <span class="math inline">\(y_t\)</span>.
+Cet estimateur peut également dépendre de <span class="math inline">\(M_{\boldsymbol\theta}.\)</span><a href="an-diag.html#fnref35" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="conclusion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="an-graphs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["M2024-01_DT_Estimation-en-temps-reel-de-la-tendance-cycle.pdf", "M2024-01_DT_Estimation-en-temps-reel-de-la-tendance-cycle.tex"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

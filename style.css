@@ -1,0 +1,109 @@
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+.abstract {
+    position: relative;
+    margin: 1.5em 0em;
+    padding: 0px 10px 8px;
+    border: solid 2px;
+    border-radius: 10px;
+}
+
+.abstract #title {
+    text-align: center;
+    font-weight: bold;
+}
+.summary_box {
+    position: relative;
+    margin: 1.5em 0em;
+    padding: 35px 10px 8px;
+    border: solid 2px;
+    border-radius: 10px;
+    background: #F2F2F2;
+}
+
+.summary_box .title {
+    position: absolute;
+    display: inline-block;
+    top: -15px;
+    left: 20px;
+    padding: 2px 1px;
+    vertical-align: middle;
+    background: #CCCCCC;
+    font-weight: bold;
+    border: solid 1px;
+    border-radius: 10px;
+}
+.summary_box .title:before {
+    content: "Encadré " counter(summary) "— ";
+    counter-increment: summary;
+}
+.summary_box .title p {
+    margin:0;
+    margin-bottom: 0;
+    display: inline-block; /*pour ne pas passer à la ligne*/
+}
+.summary_box p {
+    margin: 0; 
+    padding: 0;
+}
+body {
+  counter-reset: summary;                    /* On initialise le compteur à 0 */
+}
+
+.remarque {
+    position: relative;
+    font-style: italic;
+    margin: 30px;
+}
+.remarque p{
+    display: inline;/*pour ne pas passer à la ligne*/
+}
+.remarque:before {
+  content: "Remarque : ";
+  font-weight: bold;
+  font-style: normal;
+}
+p.caption {
+  color: #777;
+  /*margin-top: 10px;*/
+  margin-bottom: 0;
+}
+#note{
+  margin-top: 0em;
+  margin-bottom: 0;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: #777;
+}
+#note p, #source p{
+  margin-bottom: 0em;
+}
+
+#note .title:before{
+  content: "Note : ";
+  display: inline-block;
+}
+#source, #lecture{
+  margin-top: -1.2em;
+  margin-bottom: 0em;
+  font-style: italic;
+  font-size: 1.5rem;
+}
+#source .title:before{
+  content: "Source : ";
+  display: inline-block;
+}
+#lecture .title:before{
+  content: "Note de lecture : ";
+  display: inline-block;
+}
